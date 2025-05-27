@@ -61,18 +61,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       } catch (error: any) {
         setIsAuthenticated(false);
-        
-        // Use mock authentication for development
-        if (error.code === 'NETWORK_ERROR' || error.message?.includes('Network Error')) {
-          const mockUser: User = {
-            id: 1,
-            username: 'admin',
-            email: 'admin@example.com',
-            role: 'admin' as const,
-          };
-          setUser(mockUser);
-          setIsAuthenticated(true);
-        }
       } finally {
         setIsLoading(false);
       }
@@ -104,20 +92,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         throw new Error('Invalid response from server');
       }
     } catch (error: any) {
-      // Use mock login for development when API is not available
-      if (error.code === 'NETWORK_ERROR' || error.message?.includes('Network Error')) {
-        const mockUser: User = {
-          id: 1,
-          username: 'admin',
-          email: 'admin@example.com',
-          role: 'admin' as const,
-        };
-        setUser(mockUser);
-        setIsAuthenticated(true);
-        navigate('/dashboard');
-      } else {
-        throw new Error(error.response?.data?.message || 'Login failed');
-      }
+      throw new Error(error.message || 'Login failed');
     }
   };
 
