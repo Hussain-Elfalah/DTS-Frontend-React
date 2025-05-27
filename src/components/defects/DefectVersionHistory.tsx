@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { formatDistanceToNow, format } from 'date-fns';
 import { useQuery } from '@tanstack/react-query';
 import { FiClock, FiRefreshCw, FiEye, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import Loader from '../ui/Loader';
 import DiffViewer from 'react-diff-viewer-continued';
 

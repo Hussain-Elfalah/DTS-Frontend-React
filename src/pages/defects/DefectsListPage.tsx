@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { FiPlus, FiRefreshCw, FiSearch, FiChevronRight } from 'react-icons/fi';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import Loader from '../../components/ui/Loader';
 import DefectStatusBadge from '../../components/defects/DefectStatusBadge';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { PlusIcon, FunnelIcon } from '@heroicons/react/24/outline';
 
 interface DefectsListPageProps {
   showClosed?: boolean;

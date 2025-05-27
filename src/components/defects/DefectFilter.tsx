@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { userApi } from '../../services/api';
+import { userApi } from '../../services';
 import { FiSearch, FiFilter, FiX } from 'react-icons/fi';
 
 interface DefectFilterProps {

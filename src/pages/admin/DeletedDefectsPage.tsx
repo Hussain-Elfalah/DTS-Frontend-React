@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { FiTrash2, FiRefreshCw, FiEye, FiSearch } from 'react-icons/fi';
-import { adminApi } from '../../services/api';
+import { adminApi } from '../../services';
 import { useToastMessages } from '../../contexts/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import Loader from '../../components/ui/Loader';

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import type { ChangeEvent } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import { FiUpload, FiX } from 'react-icons/fi';
 
 interface AttachmentUploaderProps {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
-import { solutionApi, type Solution, type SolutionAttachment } from '../services/solutionApi';
+import { solutionApi, type Solution, type SolutionAttachment } from '../services';
 import { PlusIcon, PencilIcon, TrashIcon, PaperClipIcon, XMarkIcon, DocumentIcon } from '@heroicons/react/24/outline';
 
 interface SolutionsProps {

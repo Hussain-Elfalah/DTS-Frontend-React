@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { commentApi } from '../../services/api';
+import { commentApi } from '../../services';
 import { FiSend, FiX, FiPaperclip, FiFile } from 'react-icons/fi';
 
 // Comment form schema
@@ -53,7 +53,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
       }
       return commentApi.addComment(defectId, data.content);
     },
-    onSuccess: async (response) => {
+    onSuccess: async (response: any) => {
       // If there are files to upload, upload them after comment creation
       if (selectedFiles.length > 0 && response.data?.comment?.id) {
         try {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow, format } from 'date-fns';
 import { FiFilter, FiRefreshCw, FiTag, FiUser, FiEye } from 'react-icons/fi';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import DefectStatusBadge from './DefectStatusBadge';
 import DefectSeverityBadge from './DefectSeverityBadge';
 import Loader from '../ui/Loader';

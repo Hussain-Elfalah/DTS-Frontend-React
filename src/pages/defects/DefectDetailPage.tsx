@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { FiArrowLeft, FiEdit2, FiCheck, FiClock, FiRefreshCw, FiTrash2 } from 'react-icons/fi';
-import { defectApi, commentApi, debounce } from '../../services/api';
+import { defectApi, commentApi, debounce } from '../../services';
 import { useToastMessages } from '../../contexts/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import Loader from '../../components/ui/Loader';

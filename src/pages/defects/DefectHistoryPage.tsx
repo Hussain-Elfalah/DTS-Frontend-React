@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { FiArrowLeft, FiX } from 'react-icons/fi';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import Loader from '../../components/ui/Loader';
 
 // Define types for history data
@@ -11,6 +11,7 @@ interface HistoryChange {
   field: string;
   old_value: string | null;
   new_value: string | null;
+  description?: string;
 }
 
 interface HistoryItem {
@@ -77,25 +78,60 @@ const DefectHistoryPage: React.FC = () => {
     // Check if we have an array of history items
     if (Array.isArray(apiData)) {
       // Map the API data to our expected format
-      const mappedVersions = apiData.map((version: any): HistoryItem => ({
-        id: version.id,
-        version: `v${version.version || 1}`,
-        timestamp: new Date(version.created_at || version.updated_at || new Date()),
-        user: {
-          id: version.changed_by_id || 1,
-          username: version.changed_by || 'System'
-        },
-        changes: version.changes || [],
-        data: {
-          title: version.title || 'Untitled',
-          description: version.description || '',
-          status: version.status || 'open',
-          severity: version.severity || 'medium',
-          assigned_to: version.assigned_to || null,
-          assigned_to_name: version.assigned_to_name || 'Unassigned',
-          tags: version.tags || []
+      const mappedVersions = apiData.map((version: any): HistoryItem => {
+        // Handle different change formats
+        let processedChanges: HistoryChange[] = [];
+        
+        if (Array.isArray(version.changes)) {
+          processedChanges = version.changes.map((change: any) => {
+            // If change is a string (mock API format)
+            if (typeof change === 'string') {
+              return {
+                field: 'general',
+                old_value: null,
+                new_value: change,
+                description: change
+              };
+            }
+            // If change is an object (expected format)
+            else if (typeof change === 'object' && change.field) {
+              return {
+                field: change.field,
+                old_value: change.old_value,
+                new_value: change.new_value,
+                description: change.description
+              };
+            }
+            // Fallback
+            return {
+              field: 'unknown',
+              old_value: null,
+              new_value: 'Unknown change',
+              description: 'Unknown change'
+            };
+          });
         }
-      }));
+
+        return {
+          id: version.id,
+          version: version.version || `v${version.id}`,
+          timestamp: new Date(version.timestamp || version.created_at || version.updated_at || new Date()),
+          user: {
+            id: version.changed_by || version.changed_by_id || 1,
+            username: version.changed_by_name || version.changed_by || 'System'
+          },
+          changes: processedChanges,
+          data: version.new_values || {
+            title: version.title || 'Untitled',
+            description: version.description || '',
+            status: version.status || 'open',
+            severity: version.severity || 'medium',
+            assigned_to: version.assigned_to || null,
+            assigned_to_name: version.assigned_to_name || 'Unassigned',
+            tags: version.tags || []
+          }
+        };
+      });
       
       return mappedVersions;
     }
@@ -422,7 +458,7 @@ const DefectHistoryPage: React.FC = () => {
                           return (
                             <div key={idx} className="mb-2 last:mb-0">
                               <p className="text-sm text-gray-700 dark:text-gray-300">
-                                Changed <span className="font-medium">{change.field.replace('_', ' ')}</span>
+                                Changed <span className="font-medium">{(change.field || 'field').replace('_', ' ')}</span>
                                 {change.old_value && (
                                   <>
                                     {' '}from{' '}
@@ -608,7 +644,7 @@ const DefectHistoryPage: React.FC = () => {
                         ) : (
                           <div className="flex items-center space-x-2">
                             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                              {change.field.replace('_', ' ')}:
+                              {(change.field || 'field').replace('_', ' ')}:
                             </span>
                             {change.old_value && (
                               <>

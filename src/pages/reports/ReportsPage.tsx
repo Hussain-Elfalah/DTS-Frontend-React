@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../../services/api';
+import { api, reportsApi } from '../../services';
 import { useAuth } from '../../context/AuthContext';
 import { FiDownload, FiFilter, FiCalendar, FiUser, FiSearch } from 'react-icons/fi';
 import Loader from '../../components/ui/Loader';

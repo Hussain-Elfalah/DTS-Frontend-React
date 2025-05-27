@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import { defectApi } from '../../services/api';
-import { solutionApi } from '../../services/solutionApi';
-import type { WorkflowAction } from '../../services/api';
+import { defectApi, solutionApi, type WorkflowAction } from '../../services';
+import { useToastMessages } from '../../contexts/ToastContext';
+import { FiCheck, FiClock, FiRefreshCw, FiX } from 'react-icons/fi';
 
 interface DefectWorkflowActionsProps {
   defectId: number;
@@ -18,8 +18,6 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
   onStatusChange,
   className = ''
 }) => {
-  const [actions, setActions] = useState<WorkflowAction[]>([]);
-  const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState<string | null>(null);
   const [showSolutionModal, setShowSolutionModal] = useState(false);
   const [pendingStatus, setPendingStatus] = useState<string | null>(null);
@@ -35,25 +33,18 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
     enabled: !!defectId,
   });
 
-  // Fetch available workflow actions
-  useEffect(() => {
-    const fetchActions = async () => {
-      try {
-        setLoading(true);
-        const workflowActions = await defectApi.getWorkflowActions(defectId);
-        setActions(workflowActions);
-      } catch (error) {
-        console.error('Error fetching workflow actions:', error);
-        setActions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (defectId) {
-      fetchActions();
+  // Fetch available workflow actions using React Query
+  const { data: workflowActions = [], isLoading: loading, error } = useQuery<WorkflowAction[]>({
+    queryKey: ['workflow-actions', defectId, currentStatus],
+    queryFn: () => defectApi.getWorkflowActions(defectId),
+    enabled: !!defectId,
+    staleTime: 30000, // 30 seconds
+    retry: (failureCount, error: any) => {
+      // Don't retry on network errors to avoid spamming
+      if (error?.code === 'ERR_NETWORK') return false;
+      return failureCount < 2;
     }
-  }, [defectId, currentStatus]);
+  });
 
   // Create solution mutation
   const createSolutionMutation = useMutation({
@@ -117,9 +108,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
       // Notify parent component
       onStatusChange(newStatus);
       
-      // Refresh actions for the new status
-      const workflowActions = await defectApi.getWorkflowActions(defectId);
-      setActions(workflowActions);
+      // React Query will automatically refetch workflow actions when currentStatus changes
       
       toast.success(`Defect status updated to ${newStatus}`);
     } catch (error: any) {
@@ -197,7 +186,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
     );
   }
 
-  if (actions.length === 0) {
+  if (workflowActions.length === 0) {
     return null;
   }
 
@@ -206,7 +195,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
       <div className={`space-y-2 ${className}`}>
         <h4 className="text-sm font-medium text-gray-700 mb-2">Available Actions:</h4>
         <div className="flex flex-wrap gap-2">
-          {actions.map((action) => (
+          {workflowActions.map((action) => (
             <div key={action.status} className="relative">
               <button
                 onClick={() => handleStatusChange(action.status)}
@@ -236,7 +225,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
         
         {/* Show descriptions for available actions */}
         <div className="text-xs text-gray-500 space-y-1">
-          {actions.filter(action => action.canPerform).map((action) => (
+          {workflowActions.filter(action => action.canPerform).map((action) => (
             <div key={action.status} className="flex items-start space-x-2">
               <span className="font-medium">{action.label}:</span>
               <span>{action.description}</span>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { defectApi, userApi } from '../../services/api';
+import { defectApi, userApi } from '../../services';
 import { FiArrowLeft, FiSave, FiEdit2 } from 'react-icons/fi';
 import Loader from '../../components/ui/Loader';
 import { useAuth } from '../../context/AuthContext';

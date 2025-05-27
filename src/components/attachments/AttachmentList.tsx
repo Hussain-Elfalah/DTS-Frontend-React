@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
-import { defectApi } from '../../services/api';
+import { defectApi } from '../../services';
 import { useAuth } from '../../context/AuthContext';
 import AttachmentUploader from './AttachmentUploader';
 import { FiFile, FiImage, FiDownload, FiTrash2, FiPaperclip } from 'react-icons/fi';

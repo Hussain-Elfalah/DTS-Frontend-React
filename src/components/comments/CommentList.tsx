@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
-import { commentApi } from '../../services/api';
+import { commentApi } from '../../services';
 import { useAuth } from '../../context/AuthContext';
 import Loader from '../ui/Loader';
 import CommentForm from './CommentForm';

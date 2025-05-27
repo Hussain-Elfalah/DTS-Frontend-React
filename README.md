@@ -1,110 +1,185 @@
-# DTS Frontend - React
+# DTS Frontend - Defect Tracking System Demo
 
-This is the frontend application for the Defect Tracking System, built with React and modern web technologies.
+A modern, responsive React-based frontend for a Defect Tracking System with full demo capabilities.
 
-## Tech Stack
+## 🚀 Demo Mode
 
-- **React**: UI library
-- **TypeScript**: Type safety
-- **Vite**: Build tool and development server
-- **React Router**: Client-side routing
-- **TanStack Query**: Data fetching and caching
-- **React Hook Form**: Form handling and validation
-- **Zod**: Schema validation
-- **Tailwind CSS**: Utility-first CSS framework
-- **Axios**: HTTP client
+This application can run in **Demo Mode** using mock data, perfect for:
+- **Customer demonstrations** without exposing real backend systems
+- **GitHub Pages deployment** as a static site
+- **Offline development** and testing
+- **Portfolio showcases** and presentations
 
-## Getting Started
+### Features in Demo Mode
+- ✅ Full UI/UX experience with realistic mock data
+- ✅ All CRUD operations (Create, Read, Update, Delete) simulated
+- ✅ User authentication simulation
+- ✅ File upload simulation
+- ✅ Real-time notifications and toasts
+- ✅ Responsive design for all devices
+- ✅ Dark/Light theme support
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 19, TypeScript, Vite
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand, React Query
+- **Routing**: React Router v7
+- **Forms**: React Hook Form with Zod validation
+- **Icons**: Heroicons, React Icons
+- **Charts**: Recharts
+- **Notifications**: React Hot Toast
+
+## 📦 Installation & Setup
 
 ### Prerequisites
-
-- Node.js (v14+)
+- Node.js 18+ 
 - npm or yarn
 
-### Installation
-
-1. Clone the repository:
-
+### Development Setup
 ```bash
-git clone <repository-url>
+# Clone the repository
+git clone <your-repo-url>
 cd dts-frontend
-```
 
-2. Install dependencies:
+# Install dependencies
+npm install --legacy-peer-deps
 
-```bash
-npm install
-# or
-yarn
-```
-
-3. Set up environment variables:
-
-Create a `.env` file in the root directory:
-
-```
-VITE_API_URL=http://localhost:3000
-```
-
-Replace with your backend API URL.
-
-### Development
-
-Start the development server:
-
-```bash
+# Start development server
 npm run dev
-# or
-yarn dev
 ```
 
-This will start the application at `http://localhost:5173`.
+### Demo Mode Configuration
+Demo mode is controlled in `src/config/demo.ts`:
 
-### Build for Production
+```typescript
+export const DEMO_MODE = true; // Set to false for production
+```
 
+## 🚀 Deployment
+
+### GitHub Pages Deployment
 ```bash
-npm run build
-# or
-yarn build
+# Build for GitHub Pages
+npm run build:demo
+
+# Deploy to GitHub Pages (requires gh-pages package)
+npm run deploy
 ```
 
-The built files will be in the `dist` directory.
+### Manual Deployment
+```bash
+# Build for production
+npm run build
 
-## Project Structure
+# The dist/ folder contains the built application
+```
+
+## 📁 Project Structure
 
 ```
 src/
-├── components/      # Reusable UI components
-│   ├── auth/        # Authentication components
-│   ├── defects/     # Defect-related components
-│   ├── comments/    # Comment components
-│   ├── attachments/ # Attachment components
-│   ├── layout/      # Layout components
-│   └── ui/          # Generic UI components
-├── context/         # React contexts
-├── pages/           # Page components
-│   ├── admin/       # Admin pages
-│   ├── auth/        # Authentication pages
-│   ├── dashboard/   # Dashboard pages
-│   ├── defects/     # Defect pages
-│   └── user/        # User profile pages
-├── services/        # API services
-├── App.tsx          # Main app component with routing
-└── main.tsx         # Entry point
+├── components/          # Reusable UI components
+│   ├── defects/        # Defect-related components
+│   ├── comments/       # Comment system components
+│   ├── ui/             # Generic UI components
+│   └── layout/         # Layout components
+├── pages/              # Page components
+│   ├── dashboard/      # Dashboard pages
+│   ├── defects/        # Defect management pages
+│   ├── admin/          # Admin pages
+│   └── auth/           # Authentication pages
+├── services/           # API services
+│   ├── api.ts          # Real API services
+│   ├── mockApi.ts      # Mock API services
+│   └── index.ts        # Service selector
+├── data/               # Mock data
+├── contexts/           # React contexts
+├── hooks/              # Custom hooks
+└── config/             # Configuration files
 ```
 
-## Features
+## 🎯 Key Features
 
-- User authentication (login, logout)
-- Role-based access control (user, admin)
-- Dashboard with defect statistics
-- Defect management (create, view, edit, delete)
-- Defect filtering and searching
-- Comment system
+### Defect Management
+- Create, edit, and delete defects
+- Advanced filtering and search
+- Status workflow management
+- Priority and severity tracking
+- Tag-based organization
 - File attachments
-- User profile management
-- Admin user management
+- Comment system
+- Version history
 
-## License
+### User Management
+- Role-based access control (Admin, Developer, Tester, Manager)
+- User profiles and preferences
+- Activity tracking
+- Session management
 
-[MIT](LICENSE)
+### Dashboard & Analytics
+- Real-time defect statistics
+- Interactive charts and graphs
+- Recent activity feeds
+- Quick action buttons
+
+### Admin Features
+- User management
+- System settings
+- Deleted items recovery
+- Audit logs
+
+## 🎨 UI/UX Features
+
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Dark/Light Theme**: User preference with system detection
+- **Accessibility**: WCAG compliant with keyboard navigation
+- **Loading States**: Skeleton loaders and progress indicators
+- **Error Handling**: Graceful error messages and recovery
+- **Toast Notifications**: Real-time feedback for user actions
+
+## 🔧 Configuration
+
+### Environment Variables
+```env
+VITE_API_URL=http://localhost:3000  # Backend API URL (production only)
+```
+
+### Demo Configuration
+Edit `src/config/demo.ts` to customize demo behavior:
+- Enable/disable demo banner
+- Adjust API delay simulation
+- Configure demo user settings
+- Control feature availability
+
+## 📱 Browser Support
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🎯 Demo Use Cases
+
+Perfect for:
+- **Sales Demonstrations**: Show potential clients the full system capabilities
+- **Portfolio Projects**: Showcase your development skills
+- **Training**: Onboard new team members without affecting production data
+- **Testing**: Validate UI/UX changes without backend dependencies
+- **Presentations**: Demo at conferences or meetings
+
+---
+
+**Note**: This demo version uses simulated data and does not require a backend server. All changes are temporary and reset on page refresh.

@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { api } from '../services';
 
 // Define user type
 export interface User {

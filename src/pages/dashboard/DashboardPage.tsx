@@ -1,7 +1,8 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { defectApi } from '../../services/api';
+import { defectApi, dashboardApi } from '../../services';
 import { FiActivity, FiClock, FiCheckCircle, FiAlertTriangle, FiUsers, FiTrendingUp, FiCalendar, FiPlus, FiAlertCircle, FiXCircle, FiPauseCircle } from 'react-icons/fi';
 import Loader from '../../components/ui/Loader';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';

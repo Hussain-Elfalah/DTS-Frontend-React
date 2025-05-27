@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { userApi } from '../services/api';
+import { userApi } from '../services';
 import Loader from '../components/ui/Loader';
 import { 
   FiUser, 

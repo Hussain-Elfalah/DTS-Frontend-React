@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
-import SubmitBugForm from '../../components/defects/SubmitBugForm';
+import SubmitDefectForm from '../../components/defects/SubmitDefectForm';
 
 const DefectCreatePage: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const DefectCreatePage: React.FC = () => {
         </p>
       </div>
       
-      <SubmitBugForm />
+      <SubmitDefectForm />
     </div>
   );
 };
