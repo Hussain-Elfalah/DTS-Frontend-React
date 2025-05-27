@@ -87,8 +87,11 @@ const AppContent = () => {
 };
 
 function App() {
+  // Get the base name for GitHub Pages deployment
+  const basename = import.meta.env.PROD ? '/DTS-Frontend-React' : '';
+  
   return (
-    <Router>
+    <Router basename={basename}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>
