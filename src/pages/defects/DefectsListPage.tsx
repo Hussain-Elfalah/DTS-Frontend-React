@@ -14,30 +14,40 @@ interface DefectsListPageProps {
 }
 
 const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   
+  // Get search term from URL parameters
+  const urlSearchTerm = searchParams.get('search') || '';
+  const [searchTerm, setSearchTerm] = useState(urlSearchTerm);
+
+  // Update search term when URL parameters change
+  useEffect(() => {
+    setSearchTerm(urlSearchTerm);
+  }, [urlSearchTerm]);
+
   // Build query params for open defects
   const openParams = {
     status: 'open',
-    title: searchTerm || undefined,
+    search: searchTerm || undefined,
   };
   
   // Build query params for in-progress defects
   const inProgressParams = {
     status: 'in_progress',
-    title: searchTerm || undefined,
+    search: searchTerm || undefined,
   };
   
   // Build query params for resolved defects
   const resolvedParams = {
     status: 'resolved',
-    title: searchTerm || undefined,
+    search: searchTerm || undefined,
   };
   
   // Build query params for closed defects
   const closedParams = {
     status: 'closed',
-    title: searchTerm || undefined,
+    search: searchTerm || undefined,
   };
   
   // Fetch appropriate defects based on showClosed flag
@@ -130,6 +140,24 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
     ? isLoadingResolved || isLoadingClosed 
     : isLoadingOpen || isLoadingInProgress;
   
+  // Handle local search input changes
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    
+    // Update URL with search parameter
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (value.trim()) {
+      newSearchParams.set('search', value.trim());
+    } else {
+      newSearchParams.delete('search');
+    }
+    
+    navigate({
+      pathname: '/defects',
+      search: newSearchParams.toString()
+    }, { replace: true });
+  };
+
   return (
     <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -155,7 +183,7 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
               className="block w-64 pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Search defects..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
             />
           </div>
           

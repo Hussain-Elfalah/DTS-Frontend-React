@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import { FiMenu, FiUser, FiSearch, FiSun, FiMoon } from 'react-icons/fi';
+import { FiMenu, FiUser, FiSun, FiMoon } from 'react-icons/fi';
 import { useState } from 'react';
+import SearchDropdown from '../ui/SearchDropdown';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -48,20 +49,11 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
             <FiMenu className="h-6 w-6" />
           </button>
           
-          <span className="ml-4 text-lg font-medium text-gray-900 dark:text-white">{getPageTitle()}</span>
+          {/* <span className="ml-4 text-lg font-medium text-gray-900 dark:text-white">{getPageTitle()}</span> */}
         </div>
         
         <div className="flex-1 max-w-md mx-auto">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-            </div>
-            <input
-              type="text"
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="Search defects..."
-            />
-          </div>
+          <SearchDropdown placeholder="Search defects..." />
         </div>
         
         <div className="flex items-center">
