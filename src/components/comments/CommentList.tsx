@@ -123,7 +123,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
   const handleDownloadAttachment = (attachment: Attachment) => {
     // Create a download link
     const link = document.createElement('a');
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
     
     // Use URL if available, otherwise construct from filename
     if (attachment.url) {
@@ -167,27 +167,27 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
       {/* Comments list */}
       {comments.length === 0 ? (
         <div className="text-center py-6">
-          <p className="text-gray-500 dark:text-gray-400">No comments yet</p>
-          <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">Be the first to add a comment</p>
+          <p className="text-muted-foreground">No comments yet</p>
+          <p className="mt-1 text-sm text-muted-foreground">Be the first to add a comment</p>
         </div>
       ) : (
         <ul className="space-y-4">
           {comments.map((comment) => (
-            <li key={comment.id} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+            <li key={comment.id} className="bg-muted p-4 rounded-lg">
               <div className="flex justify-between items-start">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <span className="text-gray-500 dark:text-gray-300 font-medium">
+                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-muted-foreground font-medium">
                         {getCommentUsername(comment).substring(0, 2).toUpperCase()}
                       </span>
                     </div>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-foreground">
                       {getCommentUsername(comment)}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-muted-foreground">
                       {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
                     </p>
                   </div>
@@ -198,16 +198,16 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
                   <div className="relative">
                     <button
                       type="button"
-                      className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+                      className="text-muted-foreground hover:text-muted-foreground"
                       onClick={() => toggleCommentMenu(comment.id)}
                     >
                       <FiMoreVertical className="h-5 w-5" />
                     </button>
                     
                     {menuOpenForComment === comment.id && (
-                      <div className="absolute right-0 mt-1 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 dark:ring-gray-600 z-10">
+                      <div className="absolute right-0 mt-1 w-48 rounded-md shadow-sm py-1 bg-card ring-1 ring-black ring-opacity-5 z-10">
                         <button
-                          className="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          className="w-full text-left block px-4 py-2 text-sm text-foreground hover:bg-muted"
                           onClick={() => handleEditComment(comment.id)}
                         >
                           <div className="flex items-center">
@@ -216,7 +216,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
                           </div>
                         </button>
                         <button
-                          className="w-full text-left block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-muted"
                           onClick={() => handleDeleteComment(comment.id)}
                         >
                           <div className="flex items-center">
@@ -240,27 +240,27 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
                   />
                 ) : (
                   <>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">{comment.content}</p>
+                    <p className="text-sm text-foreground whitespace-pre-line">{comment.content}</p>
                     
                     {/* Attachments */}
                     {comment.attachments && comment.attachments.length > 0 && (
                       <div className="mt-3 space-y-2">
-                        <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                        <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                           Attachments ({comment.attachments.length})
                         </h4>
                         <div className="space-y-1">
                           {comment.attachments.map((attachment) => (
                             <div
                               key={attachment.id}
-                              className="flex items-center justify-between p-2 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                              className="flex items-center justify-between p-2 bg-card rounded border border-border hover:border-border"
                             >
                               <div className="flex items-center space-x-2 flex-1 min-w-0">
-                                <FiFile className="h-4 w-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
+                                <FiFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                  <p className="text-sm font-medium text-foreground truncate">
                                     {getAttachmentDisplayName(attachment)}
                                   </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  <p className="text-xs text-muted-foreground">
                                     {formatFileSize(getAttachmentSize(attachment))}
                                   </p>
                                 </div>
@@ -268,7 +268,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
                               <div className="flex items-center space-x-1">
                                 <button
                                   type="button"
-                                  className="p-1 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                                  className="p-1 text-muted-foreground hover:text-foreground"
                                   onClick={() => handleDownloadAttachment(attachment)}
                                   title="Download"
                                 >
@@ -277,7 +277,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, defectId, isLoading
                                 {canModifyComment(comment) && (
                                   <button
                                     type="button"
-                                    className="p-1 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400"
+                                    className="p-1 text-muted-foreground hover:text-red-600"
                                     onClick={() => handleDeleteAttachment(comment.id, attachment.id, getAttachmentDisplayName(attachment))}
                                     title="Delete"
                                   >

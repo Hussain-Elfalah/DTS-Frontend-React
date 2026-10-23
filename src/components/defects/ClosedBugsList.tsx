@@ -122,34 +122,34 @@ const ClosedBugsList: React.FC<ClosedBugsListProps> = ({
   
   if (!combinedData?.data?.length) {
     return (
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-card shadow rounded-lg p-6">
         {showTitle && (
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Closed Bugs</h2>
+          <h2 className="text-lg font-medium text-foreground mb-4">Closed Bugs</h2>
         )}
         <div className="text-center py-6">
-          <p className="text-gray-500">No closed bugs found</p>
+          <p className="text-muted-foreground">No closed bugs found</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="bg-white shadow rounded-lg overflow-hidden">
-      <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+    <div className="bg-card shadow rounded-lg overflow-hidden">
+      <div className="p-4 border-b border-border flex justify-between items-center">
         {showTitle && (
-          <h2 className="text-lg font-medium text-gray-900">Closed Bugs</h2>
+          <h2 className="text-lg font-medium text-foreground">Closed Bugs</h2>
         )}
         <div className="flex space-x-2">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="p-2 text-gray-500 hover:text-gray-700 rounded-md hover:bg-gray-100"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
             title="Filter"
           >
             <FiFilter className="h-5 w-5" />
           </button>
           <button
             onClick={refetchAll}
-            className="p-2 text-gray-500 hover:text-gray-700 rounded-md hover:bg-gray-100"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
             title="Refresh"
           >
             <FiRefreshCw className="h-5 w-5" />
@@ -158,10 +158,10 @@ const ClosedBugsList: React.FC<ClosedBugsListProps> = ({
       </div>
       
       {showFilters && (
-        <div className="p-4 bg-gray-50 border-b border-gray-200">
+        <div className="p-4 bg-muted border-b border-border">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label htmlFor="severity-filter" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="severity-filter" className="block text-sm font-medium text-foreground mb-1">
                 Severity
               </label>
               <select
@@ -182,36 +182,36 @@ const ClosedBugsList: React.FC<ClosedBugsListProps> = ({
       )}
       
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-border">
+          <thead className="bg-muted">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-muted"
                 onClick={() => handleSort('title')}
               >
                 <div className="flex items-center">
                   Issue {renderSortIcon('title')}
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Status
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-muted"
                 onClick={() => handleSort('severity')}
               >
                 <div className="flex items-center">
                   Severity {renderSortIcon('severity')}
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Resolved By
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:bg-muted"
                 onClick={() => handleSort('closed_at')}
               >
                 <div className="flex items-center">
@@ -220,21 +220,21 @@ const ClosedBugsList: React.FC<ClosedBugsListProps> = ({
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-card divide-y divide-border">
             {combinedData.data.map((defect: any) => (
-              <tr key={defect.id} className="hover:bg-gray-50">
+              <tr key={defect.id} className="hover:bg-muted">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
                     <Link
                       to={`/defects/${defect.id}`}
-                      className="text-primary hover:text-blue-700 font-medium"
+                      className="text-primary hover:text-foreground font-medium"
                     >
                       {defect.title}
                     </Link>
                     <div className="mt-1 flex items-center">
-                      <span className="text-sm text-gray-500 mr-2">#{defect.id}</span>
+                      <span className="text-sm text-muted-foreground mr-2">#{defect.id}</span>
                       {defect.tags?.length > 0 && (
-                        <div className="flex items-center text-xs text-gray-500">
+                        <div className="flex items-center text-xs text-muted-foreground">
                           <FiTag className="h-3 w-3 mr-1" />
                           {defect.tags.slice(0, 3).join(', ')}
                           {defect.tags.length > 3 && ` +${defect.tags.length - 3} more`}
@@ -252,14 +252,14 @@ const ClosedBugsList: React.FC<ClosedBugsListProps> = ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
-                      <FiUser className="h-4 w-4 text-gray-500" />
+                      <FiUser className="h-4 w-4 text-muted-foreground" />
                     </div>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-foreground">
                       {defect.closed_by?.username || defect.assigned_to?.username || 'System'}
                     </span>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                   {defect.closed_at 
                     ? formatDistanceToNow(new Date(defect.closed_at), { addSuffix: true })
                     : formatDistanceToNow(new Date(defect.updated_at), { addSuffix: true })}

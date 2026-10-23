@@ -11,58 +11,54 @@ export interface ToastProps {
   onDismiss: (id: string) => void;
 }
 
-const Toast: React.FC<ToastProps> = ({ 
-  id, 
-  message, 
-  type, 
-  duration = 3000, 
-  onDismiss 
+const Toast: React.FC<ToastProps> = ({
+  id,
+  message,
+  type,
+  duration = 3000,
+  onDismiss,
 }) => {
   const [visible, setVisible] = useState(true);
 
-  // Auto-dismiss timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
-      setTimeout(() => onDismiss(id), 300); // Allow fade-out animation to complete
+      setTimeout(() => onDismiss(id), 300);
     }, duration);
 
     return () => clearTimeout(timer);
   }, [duration, id, onDismiss]);
 
-  // Handle manual dismiss
   const handleDismiss = () => {
     setVisible(false);
     setTimeout(() => onDismiss(id), 300);
   };
 
-  // Different styles based on toast type
   const getTypeStyles = () => {
     switch (type) {
       case 'success':
-        return 'bg-green-50 text-green-800 border-green-200';
+        return 'bg-card text-foreground border-emerald-500/30';
       case 'error':
-        return 'bg-red-50 text-red-800 border-red-200';
+        return 'bg-card text-foreground border-destructive/30';
       case 'warning':
-        return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+        return 'bg-card text-foreground border-amber-500/30';
       case 'info':
       default:
-        return 'bg-blue-50 text-blue-800 border-blue-200';
+        return 'bg-card text-foreground border-border';
     }
   };
 
-  // Icons for different toast types
   const getTypeIcon = () => {
     switch (type) {
       case 'success':
-        return <FiCheckCircle className="h-5 w-5 text-green-500" />;
+        return <FiCheckCircle className="h-5 w-5 text-emerald-500" />;
       case 'error':
-        return <FiAlertCircle className="h-5 w-5 text-red-500" />;
+        return <FiAlertCircle className="h-5 w-5 text-destructive" />;
       case 'warning':
-        return <FiAlertCircle className="h-5 w-5 text-yellow-500" />;
+        return <FiAlertCircle className="h-5 w-5 text-amber-500" />;
       case 'info':
       default:
-        return <FiInfo className="h-5 w-5 text-blue-500" />;
+        return <FiInfo className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
@@ -73,28 +69,24 @@ const Toast: React.FC<ToastProps> = ({
       }`}
     >
       <div
-        className={`flex p-4 rounded-md shadow-md border ${getTypeStyles()} items-center max-w-md`}
+        className={`flex max-w-md items-center rounded-lg border p-4 shadow-sm ${getTypeStyles()}`}
         role="alert"
       >
-        <div className="flex-shrink-0 mr-3">
-          {getTypeIcon()}
-        </div>
-        <div className="flex-1 mr-2">
+        <div className="mr-3 flex-shrink-0">{getTypeIcon()}</div>
+        <div className="mr-2 flex-1">
           <p className="text-sm font-medium">{message}</p>
         </div>
-        <div className="flex-shrink-0">
-          <button
-            type="button"
-            className="inline-flex text-gray-400 hover:text-gray-500 focus:outline-none"
-            onClick={handleDismiss}
-          >
-            <span className="sr-only">Close</span>
-            <FiX className="h-5 w-5" />
-          </button>
-        </div>
+        <button
+          type="button"
+          className="inline-flex text-muted-foreground hover:text-foreground focus:outline-none"
+          onClick={handleDismiss}
+        >
+          <span className="sr-only">Close</span>
+          <FiX className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );
 };
 
-export default Toast; 
+export default Toast;

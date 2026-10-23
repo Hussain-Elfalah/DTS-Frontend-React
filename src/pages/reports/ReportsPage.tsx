@@ -156,28 +156,28 @@ const ReportsPage: React.FC = () => {
   // Determine if the current user can access this page
   if (user?.role !== 'admin') {
     return (
-      <div className="p-6 text-center bg-gray-50 dark:bg-gray-900 min-h-full">
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Access Denied</h2>
-        <p className="text-gray-600 dark:text-gray-400">You don't have permission to view audit reports.</p>
+      <div className="p-6 text-center bg-muted min-h-full">
+        <h2 className="text-xl font-semibold text-foreground mb-4">Access Denied</h2>
+        <p className="text-muted-foreground">You don't have permission to view audit reports.</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-gray-50 dark:bg-gray-900 min-h-full">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-muted min-h-full">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Audit Logs Report</h1>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <h1 className="text-2xl font-semibold text-foreground">Audit Logs Report</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           View and export system audit logs
         </p>
       </div>
 
       {/* Filter & Export Controls */}
-      <div className="mb-6 bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <div className="mb-6 bg-card shadow-md rounded-lg p-4 border border-border">
         <div className="flex justify-between items-center mb-4">
           <button 
             onClick={() => setShowFilters(!showFilters)}
-            className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-3 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
           >
             <FiFilter className="mr-2 h-4 w-4" />
             {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -187,7 +187,7 @@ const ReportsPage: React.FC = () => {
             <button
               onClick={() => exportAuditLogs('csv')}
               disabled={loading}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="inline-flex items-center px-3 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring disabled:opacity-50"
             >
               <FiDownload className="mr-2 h-4 w-4" />
               Export CSV
@@ -195,7 +195,7 @@ const ReportsPage: React.FC = () => {
             <button
               onClick={() => exportAuditLogs('pdf')}
               disabled={loading}
-              className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
             >
               <FiDownload className="mr-2 h-4 w-4" />
               Export PDF
@@ -204,11 +204,11 @@ const ReportsPage: React.FC = () => {
         </div>
         
         {showFilters && (
-          <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-md space-y-4 relative z-10 shadow-md border border-gray-200 dark:border-gray-600">
+          <div className="bg-muted p-4 rounded-md space-y-4 relative z-10 shadow-md border border-border">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Date Range Filter */}
               <div>
-                <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="startDate" className="block text-sm font-medium text-foreground mb-1">
                   <FiCalendar className="inline mr-1" /> Start Date
                 </label>
                 <input
@@ -216,12 +216,12 @@ const ReportsPage: React.FC = () => {
                   id="startDate"
                   value={filterOptions.startDate}
                   onChange={(e) => setFilterOptions(prev => ({ ...prev, startDate: e.target.value }))}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="shadow-sm focus:ring-ring focus:border-ring block w-full sm:text-sm border border-border rounded-md p-2 bg-card text-foreground"
                 />
               </div>
               
               <div>
-                <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="endDate" className="block text-sm font-medium text-foreground mb-1">
                   <FiCalendar className="inline mr-1" /> End Date
                 </label>
                 <input
@@ -229,13 +229,13 @@ const ReportsPage: React.FC = () => {
                   id="endDate"
                   value={filterOptions.endDate}
                   onChange={(e) => setFilterOptions(prev => ({ ...prev, endDate: e.target.value }))}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="shadow-sm focus:ring-ring focus:border-ring block w-full sm:text-sm border border-border rounded-md p-2 bg-card text-foreground"
                 />
               </div>
               
               {/* Username Filter */}
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">
                   <FiUser className="inline mr-1" /> Username
                 </label>
                 <div className="flex">
@@ -251,12 +251,12 @@ const ReportsPage: React.FC = () => {
                         applyFilters();
                       }
                     }}
-                    className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border border-gray-300 dark:border-gray-600 rounded-l-md p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                    className="shadow-sm focus:ring-ring focus:border-ring block w-full sm:text-sm border border-border rounded-l-md p-2 bg-card text-foreground placeholder-muted-foreground"
                   />
                   <button
                     type="button"
                     onClick={applyFilters}
-                    className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 border-l-0 shadow-sm text-sm font-medium rounded-r-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex items-center px-3 py-2 border border-border border-l-0 shadow-sm text-sm font-medium rounded-r-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
                   >
                     <FiSearch className="h-4 w-4" />
                   </button>
@@ -269,14 +269,14 @@ const ReportsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-3 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
               >
                 Reset
               </button>
               <button
                 type="button"
                 onClick={applyFilters}
-                className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
               >
                 Apply Filters
               </button>
@@ -286,67 +286,67 @@ const ReportsPage: React.FC = () => {
       </div>
 
       {/* Audit Logs Table */}
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+      <div className="bg-card shadow-md rounded-lg overflow-hidden border border-border">
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <Loader />
           </div>
         ) : error ? (
-          <div className="p-6 text-center text-red-600 dark:text-red-400">
+          <div className="p-6 text-center text-red-600">
             <p>{error}</p>
           </div>
         ) : auditLogs.length === 0 ? (
-          <div className="p-6 text-center text-gray-500 dark:text-gray-400">
+          <div className="p-6 text-center text-muted-foreground">
             <p>No audit logs found.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-700">
+            <table className="min-w-full divide-y divide-border">
+              <thead className="bg-muted">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     ID
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Action
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     User
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Entity
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Timestamp
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Details
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="bg-card divide-y divide-border">
                 {auditLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                  <tr key={log.id} className="hover:bg-muted">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                       {log.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-muted text-foreground">
                         {log.type.replace(/_/g, ' ')}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                       {log.user_name || `User #${log.user_id}` || 'System'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                       {log.entity_type ? `${log.entity_type} #${log.entity_id}` : 'N/A'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                       {formatDate(log.created_at)}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">
+                    <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs truncate">
                       {log.changes ? (
-                        <pre className="text-xs bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-2 rounded overflow-auto border border-gray-200 dark:border-gray-600">
+                        <pre className="text-xs bg-muted text-foreground p-2 rounded overflow-auto border border-border">
                           {JSON.stringify(log.changes, null, 2)}
                         </pre>
                       ) : (

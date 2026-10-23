@@ -90,14 +90,14 @@ const StatCard = ({
   bgColor: string;
   textColor: string;
 }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5 border border-gray-200 dark:border-gray-700">
+  <div className="bg-card rounded-lg shadow p-5 border border-border">
     <div className="flex items-start">
       <div className={`flex-shrink-0 w-10 h-10 ${bgColor} rounded-lg flex items-center justify-center mr-4`}>
         <div className={`h-5 w-5 ${textColor}`}>{icon}</div>
       </div>
       <div>
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{title}</p>
-        <p className="text-3xl font-semibold text-gray-900 dark:text-white mt-1">{value}</p>
+        <p className="text-sm font-medium text-muted-foreground">{title}</p>
+        <p className="text-3xl font-semibold text-foreground mt-1">{value}</p>
       </div>
     </div>
   </div>
@@ -129,8 +129,8 @@ const DefectListItem = ({ defect }: { defect: any }) => {
         </span>;
       default:
         return <span className="inline-flex items-center mr-2">
-          <span className="w-2 h-2 bg-gray-500 rounded-full mr-1"></span>
-          <span className="text-sm text-gray-600">{severity}</span>
+          <span className="w-2 h-2 bg-background0 rounded-full mr-1"></span>
+          <span className="text-sm text-muted-foreground">{severity}</span>
         </span>;
     }
   };
@@ -140,25 +140,25 @@ const DefectListItem = ({ defect }: { defect: any }) => {
       case 'open':
         return <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800">Open</span>;
       case 'in_progress':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">In Progress</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-muted text-foreground">In Progress</span>;
       case 'resolved':
         return <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Resolved</span>;
       case 'closed':
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">Closed</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-muted text-foreground">Closed</span>;
       default:
-        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">{status}</span>;
+        return <span className="px-2 py-1 text-xs font-medium rounded-full bg-muted text-foreground">{status}</span>;
     }
   };
 
   return (
-    <li className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
-      <Link to={`/defects/${defect.id}`} className="block hover:bg-gray-50 dark:hover:bg-gray-700">
+    <li className="px-4 py-3 border-b border-border last:border-0">
+      <Link to={`/defects/${defect.id}`} className="block hover:bg-muted">
         <div className="flex items-center justify-between">
           <div className="truncate">
-            <p className="font-medium text-gray-900 dark:text-white truncate">{defect.title}</p>
+            <p className="font-medium text-foreground truncate">{defect.title}</p>
             <div className="flex items-center mt-1">
               {getSeverityBadge(defect.severity)}
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-muted-foreground">
                 #{defect.id} opened by {defect.created_by?.username || 'Anonymous'}
               </span>
             </div>
@@ -299,8 +299,8 @@ const Dashboard = () => {
   }
 
   // Pie chart colors
-  const STATUS_COLORS = ['#EF4444', '#3B82F6', '#10B981', '#6B7280'];
-  const SEVERITY_COLORS = ['#DC2626', '#F59E0B', '#FBBF24', '#34D399'];
+  const STATUS_COLORS = ['#0a0a0a', '#6b6b6b', '#10b981', '#a3a3a3'];
+  const SEVERITY_COLORS = ['#b42318', '#f59e0b', '#a3a3a3', '#10b981'];
 
   // Prepare percentage labels for charts
   const addPercentageLabels = (data: { name: string; value: number }[]) => {
@@ -315,18 +315,18 @@ const Dashboard = () => {
   const severityData = addPercentageLabels(defectStats.bySeverity);
 
   return (
-    <div className="px-6 bg-gray-50 dark:bg-gray-900 min-h-full">
+    <div className="space-y-6">
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Overview of your defect tracking system
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
           <Link
             to="/defects/create"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none"
           >
             <FiPlus className="mr-2 -ml-1 h-5 w-5" />
             New Defect
@@ -340,8 +340,8 @@ const Dashboard = () => {
           title="Total Defects" 
           value={defectStats.total} 
           icon={<FiList />}
-          bgColor="bg-blue-100"
-          textColor="text-blue-600" 
+          bgColor="bg-muted"
+          textColor="text-foreground" 
         />
         <StatCard 
           title="Open Defects" 
@@ -369,9 +369,9 @@ const Dashboard = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 mb-8">
         {/* Status Distribution */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-          <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Defects by Status</h3>
+        <div className="bg-card rounded-lg shadow border border-border">
+          <div className="px-5 py-4 border-b border-border">
+            <h3 className="text-lg font-medium text-foreground">Defects by Status</h3>
           </div>
           <div className="p-5">
             <div className="h-64">
@@ -383,7 +383,7 @@ const Dashboard = () => {
                     cy="50%"
                     labelLine={false}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill="#6b6b6b"
                     dataKey="value"
                     label={false}
                   >
@@ -398,7 +398,7 @@ const Dashboard = () => {
               {statusData.map((entry, index) => (
                 <div key={`legend-${index}`} className="flex items-center mx-3 mb-2">
                   <span className={`inline-block w-3 h-3 rounded-full mr-2`} style={{ backgroundColor: STATUS_COLORS[index % STATUS_COLORS.length] }}></span>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{entry.name}: {entry.percentage}%</span>
+                  <span className="text-sm text-foreground">{entry.name}: {entry.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -406,9 +406,9 @@ const Dashboard = () => {
         </div>
 
         {/* Severity Distribution */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-          <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Defects by Severity</h3>
+        <div className="bg-card rounded-lg shadow border border-border">
+          <div className="px-5 py-4 border-b border-border">
+            <h3 className="text-lg font-medium text-foreground">Defects by Severity</h3>
           </div>
           <div className="p-5">
             <div className="h-64">
@@ -420,7 +420,7 @@ const Dashboard = () => {
                     cy="50%"
                     labelLine={false}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill="#6b6b6b"
                     dataKey="value"
                     label={false}
                   >
@@ -435,7 +435,7 @@ const Dashboard = () => {
               {severityData.map((entry, index) => (
                 <div key={`legend-${index}`} className="flex items-center mx-3 mb-2">
                   <span className={`inline-block w-3 h-3 rounded-full mr-2`} style={{ backgroundColor: SEVERITY_COLORS[index % SEVERITY_COLORS.length] }}></span>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{entry.name}: {entry.percentage}%</span>
+                  <span className="text-sm text-foreground">{entry.name}: {entry.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -443,9 +443,9 @@ const Dashboard = () => {
         </div>
 
         {/* Defect Trend */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-          <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Defect Trend (Last 7 Days)</h3>
+        <div className="bg-card rounded-lg shadow border border-border">
+          <div className="px-5 py-4 border-b border-border">
+            <h3 className="text-lg font-medium text-foreground">Defect Trend (Last 7 Days)</h3>
           </div>
           <div className="p-5">
             <div className="h-64">
@@ -458,33 +458,33 @@ const Dashboard = () => {
                   <XAxis dataKey="date" />
                   <YAxis allowDecimals={false} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="count" stroke="#3B82F6" strokeWidth={2} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="count" stroke="#0a0a0a" strokeWidth={2} dot={{ r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
             <div className="flex justify-center mt-2">
               <div className="inline-flex items-center">
-                <span className="w-2 h-2 bg-blue-500 rounded-full mr-1"></span>
-                <span className="text-sm text-gray-700 dark:text-gray-300">count</span>
+                <span className="w-2 h-2 bg-primary rounded-full mr-1"></span>
+                <span className="text-sm text-foreground">count</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Recent Defects */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-          <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Recent Defects</h3>
-            <Link to="/defects" className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+        <div className="bg-card rounded-lg shadow border border-border">
+          <div className="px-5 py-4 border-b border-border flex justify-between items-center">
+            <h3 className="text-lg font-medium text-foreground">Recent Defects</h3>
+            <Link to="/defects" className="text-sm font-medium text-foreground hover:text-foreground">
               View all
             </Link>
           </div>
-          <ul className="divide-y divide-gray-200 max-h-80 overflow-y-auto">
+          <ul className="divide-y divide-border max-h-80 overflow-y-auto">
             {defectsData?.data?.slice(0, 5).map((defect: any) => (
               <DefectListItem key={defect.id} defect={defect} />
             ))}
             {defectsData?.data?.length === 0 && (
-              <li className="px-4 py-3 text-center text-gray-500 dark:text-gray-400">
+              <li className="px-4 py-3 text-center text-muted-foreground">
                 No defects found. Start by creating a new defect.
               </li>
             )}

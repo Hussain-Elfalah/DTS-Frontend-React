@@ -26,17 +26,17 @@ export interface DefectCardProps {
 
 const DefectCard: React.FC<DefectCardProps> = ({ defect }) => {
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
+    <div className="bg-card shadow overflow-hidden sm:rounded-md">
       <div className="px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between">
           <div>
             <Link 
               to={`/defects/${defect.id}`}
-              className="text-lg font-medium text-primary hover:text-blue-700 truncate"
+              className="text-lg font-medium text-primary hover:text-foreground truncate"
             >
               {defect.title}
             </Link>
-            <p className="text-sm text-gray-500">#{defect.id}</p>
+            <p className="text-sm text-muted-foreground">#{defect.id}</p>
           </div>
           <div className="ml-2 flex-shrink-0 flex">
             <DefectSeverityBadge severity={defect.severity} />
@@ -48,14 +48,14 @@ const DefectCard: React.FC<DefectCardProps> = ({ defect }) => {
         
         <div className="mt-2 sm:flex sm:justify-between">
           <div className="sm:flex">
-            <p className="flex items-center text-sm text-gray-500">
-              <FiUser className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
+            <p className="flex items-center text-sm text-muted-foreground">
+              <FiUser className="flex-shrink-0 mr-1.5 h-5 w-5 text-muted-foreground" />
               {defect.assigned_to 
                 ? `Assigned to ${defect.assigned_to.username}` 
                 : 'Unassigned'}
             </p>
           </div>
-          <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+          <div className="mt-2 flex items-center text-sm text-muted-foreground sm:mt-0">
             <p>
               Created {formatDistanceToNow(new Date(defect.created_at), { addSuffix: true })}
             </p>
@@ -63,7 +63,7 @@ const DefectCard: React.FC<DefectCardProps> = ({ defect }) => {
         </div>
         
         <div className="mt-2">
-          <p className="text-sm text-gray-700 line-clamp-2">
+          <p className="text-sm text-foreground line-clamp-2">
             {defect.description}
           </p>
         </div>

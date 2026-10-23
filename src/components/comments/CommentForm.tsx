@@ -153,7 +153,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
         <div className="space-y-2">
           {/* File Input */}
           <div className="flex items-center space-x-2">
-            <label className="cursor-pointer inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none">
+            <label className="cursor-pointer inline-flex items-center px-3 py-1.5 border border-border shadow-sm text-sm leading-4 font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none">
               <FiPaperclip className="mr-1 -ml-0.5 h-4 w-4" />
               Attach Files
               <input
@@ -164,7 +164,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
                 accept="*/*"
               />
             </label>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-muted-foreground">
               Max 5 files
             </span>
           </div>
@@ -175,22 +175,22 @@ const CommentForm: React.FC<CommentFormProps> = ({
               {selectedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600"
+                  className="flex items-center justify-between p-2 bg-muted rounded border border-border"
                 >
                   <div className="flex items-center space-x-2 flex-1 min-w-0">
-                    <FiFile className="h-4 w-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
+                    <FiFile className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <p className="text-sm font-medium text-foreground truncate">
                         {file.name}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-muted-foreground">
                         {formatFileSize(file.size)}
                       </p>
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="p-1 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400"
+                    className="p-1 text-muted-foreground hover:text-red-600"
                     onClick={() => removeFile(index)}
                     title="Remove file"
                   >
@@ -207,7 +207,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
         {isEditing && (
           <button
             type="button"
-            className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none"
+            className="inline-flex items-center px-3 py-1.5 border border-border shadow-sm text-sm leading-4 font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none"
             onClick={handleCancel}
             disabled={isSubmitting}
           >
@@ -218,7 +218,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
         
         <button
           type="submit"
-          className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-primary hover:bg-blue-700 focus:outline-none"
+          className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none"
           disabled={isSubmitting || isUploadingAttachments}
         >
           <FiSend className="mr-1 -ml-0.5 h-4 w-4" />

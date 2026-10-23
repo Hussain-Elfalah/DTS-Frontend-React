@@ -141,7 +141,7 @@ const SubmitBugForm: React.FC<SubmitBugFormProps> = ({ onSuccess }) => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
+    <form onSubmit={handleSubmit} className="bg-card shadow-md rounded-lg p-6">
       <div className="space-y-6">
         {/* Title */}
         <div>
@@ -374,13 +374,13 @@ const SubmitBugForm: React.FC<SubmitBugFormProps> = ({ onSuccess }) => {
               {formData.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-foreground"
                 >
                   {tag}
                   <button
                     type="button"
                     onClick={() => removeTag(tag)}
-                    className="ml-1 inline-flex items-center justify-center h-4 w-4 rounded-full bg-blue-200 text-blue-800 hover:bg-blue-300"
+                    className="ml-1 inline-flex items-center justify-center h-4 w-4 rounded-full bg-muted text-foreground hover:bg-accent"
                   >
                     <FiX className="h-3 w-3" />
                   </button>
@@ -395,13 +395,13 @@ const SubmitBugForm: React.FC<SubmitBugFormProps> = ({ onSuccess }) => {
           <label htmlFor="attachments" className="form-label">
             Attachments
           </label>
-          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-border border-dashed rounded-md">
             <div className="space-y-1 text-center">
-              <FiUploadCloud className="mx-auto h-12 w-12 text-gray-400" />
-              <div className="flex text-sm text-gray-600">
+              <FiUploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
+              <div className="flex text-sm text-muted-foreground">
                 <label
                   htmlFor="file-upload"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-blue-700 focus-within:outline-none"
+                  className="relative cursor-pointer bg-card rounded-md font-medium text-primary hover:text-foreground focus-within:outline-none"
                 >
                   <span>Upload files</span>
                   <input
@@ -415,18 +415,18 @@ const SubmitBugForm: React.FC<SubmitBugFormProps> = ({ onSuccess }) => {
                 </label>
                 <p className="pl-1">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 PNG, JPG, GIF, PDF up to 10MB each
               </p>
             </div>
           </div>
           
           {attachments.length > 0 && (
-            <ul className="mt-3 divide-y divide-gray-200 border border-gray-200 rounded-md">
+            <ul className="mt-3 divide-y divide-border border border-border rounded-md">
               {attachments.map((file, index) => (
                 <li key={index} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                   <div className="flex items-center">
-                    <FiFile className="flex-shrink-0 h-5 w-5 text-gray-400" />
+                    <FiFile className="flex-shrink-0 h-5 w-5 text-muted-foreground" />
                     <span className="ml-2 flex-1 w-0 truncate">{file.name}</span>
                   </div>
                   <div className="ml-4 flex-shrink-0">
@@ -448,7 +448,7 @@ const SubmitBugForm: React.FC<SubmitBugFormProps> = ({ onSuccess }) => {
         <div className="flex justify-end mt-6">
           <button
             type="submit"
-            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
             disabled={submitMutation.isPending}
           >
             {submitMutation.isPending ? 'Submitting...' : 'Submit Bug'}

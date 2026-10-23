@@ -7,23 +7,21 @@ interface DefectSeverityBadgeProps {
 }
 
 const DefectSeverityBadge: React.FC<DefectSeverityBadgeProps> = ({ severity }) => {
-  // Define badge styles based on severity
   const getSeverityStyles = () => {
     switch (severity) {
       case 'low':
-        return 'bg-green-50 text-green-700 border-green-200';
+        return 'bg-emerald-500/15 text-emerald-700 border-emerald-500/20';
       case 'medium':
-        return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+        return 'bg-amber-500/15 text-amber-700 border-amber-500/20';
       case 'high':
-        return 'bg-orange-50 text-orange-700 border-orange-200';
+        return 'bg-amber-500/20 text-amber-800 border-amber-500/30';
       case 'critical':
-        return 'bg-red-50 text-red-700 border-red-200';
+        return 'bg-destructive/15 text-destructive border-destructive/20';
       default:
-        return 'bg-gray-50 text-gray-700 border-gray-200';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
-  
-  // Get capitalized label for display
+
   const getSeverityLabel = () => {
     switch (severity) {
       case 'low':
@@ -40,10 +38,12 @@ const DefectSeverityBadge: React.FC<DefectSeverityBadgeProps> = ({ severity }) =
   };
 
   return (
-    <span className={`px-3 py-1 inline-flex text-xs font-medium rounded-full border ${getSeverityStyles()}`}>
+    <span
+      className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium ${getSeverityStyles()}`}
+    >
       {getSeverityLabel()}
     </span>
   );
 };
 
-export default DefectSeverityBadge; 
+export default DefectSeverityBadge;

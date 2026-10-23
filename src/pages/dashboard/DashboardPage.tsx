@@ -5,8 +5,6 @@ import { defectApi } from '../../services/api';
 import { FiActivity, FiClock, FiCheckCircle, FiAlertTriangle, FiUsers, FiTrendingUp, FiCalendar, FiPlus, FiAlertCircle, FiXCircle, FiPauseCircle } from 'react-icons/fi';
 import Loader from '../../components/ui/Loader';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { useTheme } from '../../contexts/ThemeContext';
-
 // Type definitions
 interface TimelineData {
   date: string;
@@ -50,13 +48,13 @@ interface StatsState {
 
 // Colors for charts
 const COLORS = {
-  open: '#EF4444',
+  open: '#b42318',
   in_progress: '#F59E0B', 
-  resolved: '#3B82F6',
+  resolved: '#0a0a0a',
   closed: '#10B981',
-  critical: '#DC2626',
+  critical: '#b42318',
   high: '#F59E0B',
-  medium: '#3B82F6',
+  medium: '#0a0a0a',
   low: '#10B981'
 };
 
@@ -74,20 +72,20 @@ const StatCard = ({
   color: string;
   trend?: { value: number; isPositive: boolean };
 }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+  <div className="bg-card rounded-lg shadow p-6 hover:shadow-sm transition-shadow border border-border">
     <div className="flex items-center justify-between">
       <div className="flex items-center">
         <div className={`flex items-center justify-center w-12 h-12 rounded-lg ${color} text-white`}>
           {icon}
         </div>
         <div className="ml-4">
-          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
+          <p className="text-muted-foreground text-sm font-medium">{title}</p>
+          <p className="text-2xl font-bold text-foreground">{value}</p>
         </div>
       </div>
       {trend && (
         <div className={`flex items-center text-sm font-medium ${
-          trend.isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+          trend.isPositive ? 'text-green-600' : 'text-red-600'
         }`}>
           <FiTrendingUp className={`w-4 h-4 mr-1 ${!trend.isPositive ? 'rotate-180' : ''}`} />
           {Math.abs(trend.value)}%
@@ -98,14 +96,13 @@ const StatCard = ({
 );
 
 const SimpleCard = ({ title, value, color }: { title: string; value: number; color: string }) => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5 border border-gray-200 dark:border-gray-700">
-    <h3 className="text-gray-500 dark:text-gray-400 text-sm">{title}</h3>
+  <div className="bg-card rounded-lg shadow p-5 border border-border">
+    <h3 className="text-muted-foreground text-sm">{title}</h3>
     <p className={`text-2xl font-semibold mt-2 ${color}`}>{value}</p>
   </div>
 );
 
 const DashboardPage = () => {
-  const { actualTheme } = useTheme();
   const [stats, setStats] = useState<StatsState>({
     total: 0,
     open: 0,
@@ -127,21 +124,17 @@ const DashboardPage = () => {
     queryFn: () => defectApi.getDefects(),
   });
 
-  // Chart theme configuration based on current theme
-  const getChartTheme = () => {
-    const isDark = actualTheme === 'dark';
-    return {
-      tooltip: {
-        backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
-        border: `1px solid ${isDark ? '#374151' : '#E5E7EB'}`,
-        borderRadius: '8px',
-        color: isDark ? '#F9FAFB' : '#111827'
-      },
-      grid: isDark ? '#374151' : '#E5E7EB',
-      axis: isDark ? '#9CA3AF' : '#6B7280',
-      legend: isDark ? '#D1D5DB' : '#374151'
-    };
-  };
+  const getChartTheme = () => ({
+    tooltip: {
+      backgroundColor: '#FFFFFF',
+      border: '1px solid #E5E5E5',
+      borderRadius: '8px',
+      color: '#0A0A0A',
+    },
+    grid: '#E5E5E5',
+    axis: '#6B6B6B',
+    legend: '#0A0A0A',
+  });
 
   // Generate timeline data for the last 7 days
   const generateTimelineData = (defects: any[]): TimelineData[] => {
@@ -256,8 +249,8 @@ const DashboardPage = () => {
   
   if (error) {
     return (
-      <div className="text-center py-10 bg-gray-50 dark:bg-gray-900 min-h-full">
-        <p className="text-red-500 dark:text-red-400">Error loading dashboard data</p>
+      <div className="text-center py-10 bg-muted min-h-full">
+        <p className="text-red-500">Error loading dashboard data</p>
       </div>
     );
   }
@@ -265,17 +258,17 @@ const DashboardPage = () => {
   const chartTheme = getChartTheme();
 
   return (
-    <div className="px-6 py-6 bg-gray-50 dark:bg-gray-900 min-h-full">
+    <div className="px-6 py-6 bg-muted min-h-full">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">Overview of your defect tracking system</p>
+            <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground mt-1">Overview of your defect tracking system</p>
           </div>
           <Link
             to="/defects/create"
-            className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            className="bg-primary hover:bg-primary/90:bg-primary text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
           >
             <FiPlus className="w-4 h-4" />
             <span>New Defect</span>
@@ -289,7 +282,7 @@ const DashboardPage = () => {
           title="Total Defects" 
           value={stats.total} 
           icon={<FiActivity className="h-6 w-6" />} 
-          color="bg-blue-500" 
+          color="bg-primary" 
           trend={{ value: 12, isPositive: true }}
         />
         <StatCard 
@@ -318,8 +311,8 @@ const DashboardPage = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Defects by Status Chart */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Defects by Status</h3>
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
+          <h3 className="text-lg font-medium text-foreground mb-4">Defects by Status</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -330,7 +323,7 @@ const DashboardPage = () => {
                   labelLine={false}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill="#6b6b6b"
                   dataKey="value"
                 >
                   {stats.byStatus.map((entry, index) => (
@@ -345,8 +338,8 @@ const DashboardPage = () => {
         </div>
 
         {/* Defect Trend Chart */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Defect Trend (Last 7 Days)</h3>
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
+          <h3 className="text-lg font-medium text-foreground mb-4">Defect Trend (Last 7 Days)</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stats.timeline}>
@@ -354,7 +347,7 @@ const DashboardPage = () => {
                 <XAxis dataKey="date" stroke={chartTheme.axis} />
                 <YAxis stroke={chartTheme.axis} />
                 <Tooltip contentStyle={chartTheme.tooltip} />
-                <Line type="monotone" dataKey="count" stroke="#3B82F6" strokeWidth={2} />
+                <Line type="monotone" dataKey="count" stroke="#0a0a0a" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -364,8 +357,8 @@ const DashboardPage = () => {
       {/* Defects by Severity and Top Assignees */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Defects by Severity */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Defects by Severity</h3>
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
+          <h3 className="text-lg font-medium text-foreground mb-4">Defects by Severity</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.bySeverity}>
@@ -373,30 +366,30 @@ const DashboardPage = () => {
                 <XAxis dataKey="name" stroke={chartTheme.axis} />
                 <YAxis stroke={chartTheme.axis} />
                 <Tooltip contentStyle={chartTheme.tooltip} />
-                <Bar dataKey="value" fill="#3B82F6" />
+                <Bar dataKey="value" fill="#0a0a0a" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Top Assignees */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Top Assignees</h3>
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
+          <h3 className="text-lg font-medium text-foreground mb-4">Top Assignees</h3>
           <div className="space-y-4">
             {stats.byAssignee.length > 0 ? (
               stats.byAssignee.slice(0, 5).map((assignee, index) => (
                 <div key={assignee.name} className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-medium">
                       {assignee.name.charAt(0).toUpperCase()}
                     </div>
-                    <span className="ml-3 text-gray-900 dark:text-white">{assignee.name}</span>
+                    <span className="ml-3 text-foreground">{assignee.name}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="text-gray-500 dark:text-gray-400 text-sm mr-2">{assignee.count} defects</span>
-                    <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <span className="text-muted-foreground text-sm mr-2">{assignee.count} defects</span>
+                    <div className="w-16 bg-gray-200 rounded-full h-2">
                       <div 
-                        className="bg-blue-500 h-2 rounded-full" 
+                        className="bg-primary h-2 rounded-full" 
                         style={{ width: `${(assignee.count / Math.max(...stats.byAssignee.map(a => a.count))) * 100}%` }}
                       ></div>
                     </div>
@@ -404,7 +397,7 @@ const DashboardPage = () => {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">No assignees data available</p>
+              <p className="text-muted-foreground text-center py-4">No assignees data available</p>
             )}
           </div>
         </div>
@@ -413,12 +406,12 @@ const DashboardPage = () => {
       {/* Recent Activity and Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Defects */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Recent Defects</h3>
+            <h3 className="text-lg font-medium text-foreground">Recent Defects</h3>
             <Link 
               to="/defects" 
-              className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
+              className="text-foreground hover:text-foreground text-sm font-medium"
             >
               View all
             </Link>
@@ -426,7 +419,7 @@ const DashboardPage = () => {
           <div className="space-y-3">
             {defectsData?.data?.length > 0 ? (
               defectsData.data.slice(0, 5).map((defect: any) => (
-                <div key={defect.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                <div key={defect.id} className="flex items-center justify-between p-3 bg-muted rounded-lg border border-border">
                   <div className="flex items-center">
                     <div className={`w-3 h-3 rounded-full mr-3 ${
                       defect.severity === 'critical' ? 'bg-red-500' :
@@ -434,57 +427,57 @@ const DashboardPage = () => {
                       defect.severity === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
                     }`}></div>
                     <div>
-                      <p className="text-gray-900 dark:text-white font-medium">{defect.title}</p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm">#{defect.id}</p>
+                      <p className="text-foreground font-medium">{defect.title}</p>
+                      <p className="text-muted-foreground text-sm">#{defect.id}</p>
                     </div>
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    defect.status === 'open' ? 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300' :
-                    defect.status === 'in_progress' ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300' :
-                    defect.status === 'resolved' ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300' :
-                    'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300'
+                    defect.status === 'open' ? 'bg-red-100 text-red-800' :
+                    defect.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
+                    defect.status === 'resolved' ? 'bg-muted text-foreground' :
+                    'bg-green-100 text-green-800'
                   }`}>
                     {defect.status.replace('_', ' ')}
                   </span>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">No recent defects</p>
+              <p className="text-muted-foreground text-center py-4">No recent defects</p>
             )}
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+        <div className="bg-card rounded-lg shadow p-6 border border-border">
+          <h3 className="text-lg font-medium text-foreground mb-4">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-4">
             <Link
               to="/defects/create"
-              className="flex flex-col items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors border border-blue-200 dark:border-blue-800"
+              className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-muted transition-colors border border-border"
             >
-              <FiPlus className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-2" />
-              <span className="text-blue-600 dark:text-blue-400 font-medium">Create Defect</span>
+              <FiPlus className="w-8 h-8 text-foreground mb-2" />
+              <span className="text-foreground font-medium">Create Defect</span>
             </Link>
             <Link
               to="/defects"
-              className="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600"
+              className="flex flex-col items-center p-4 bg-muted rounded-lg hover:bg-muted transition-colors border border-border"
             >
-              <FiActivity className="w-8 h-8 text-gray-600 dark:text-gray-400 mb-2" />
-              <span className="text-gray-600 dark:text-gray-400 font-medium">View All</span>
+              <FiActivity className="w-8 h-8 text-muted-foreground mb-2" />
+              <span className="text-muted-foreground font-medium">View All</span>
             </Link>
             <Link
               to="/defects/closed"
-              className="flex flex-col items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors border border-green-200 dark:border-green-800"
+              className="flex flex-col items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors border border-green-200"
             >
-              <FiCheckCircle className="w-8 h-8 text-green-600 dark:text-green-400 mb-2" />
-              <span className="text-green-600 dark:text-green-400 font-medium">Closed</span>
+              <FiCheckCircle className="w-8 h-8 text-green-600 mb-2" />
+              <span className="text-green-600 font-medium">Closed</span>
             </Link>
             <Link
               to="/reports"
-              className="flex flex-col items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors border border-purple-200 dark:border-purple-800"
+              className="flex flex-col items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors border border-purple-200"
             >
-              <FiActivity className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-2" />
-              <span className="text-purple-600 dark:text-purple-400 font-medium">Reports</span>
+              <FiActivity className="w-8 h-8 text-purple-600 mb-2" />
+              <span className="text-purple-600 font-medium">Reports</span>
             </Link>
           </div>
         </div>

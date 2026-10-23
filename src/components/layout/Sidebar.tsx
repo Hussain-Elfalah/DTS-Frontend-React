@@ -10,8 +10,7 @@ import {
   FiFileText,
   FiAlertCircle,
   FiCheckCircle,
-  FiClock,
-  FiTrash2
+  FiTrash2,
 } from 'react-icons/fi';
 
 interface SidebarProps {
@@ -21,175 +20,132 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const { isAdmin } = useAuth();
   const location = useLocation();
-  
-  // Base styles for the sidebar
-  const sidebarClass = isOpen
-    ? 'fixed inset-y-0 left-0 transform translate-x-0 transition z-20 md:relative md:translate-x-0'
-    : 'fixed inset-y-0 left-0 transform -translate-x-full transition z-20 md:relative md:translate-x-0';
 
-  // Helper function to determine if a link is active
+  const sidebarClass = isOpen
+    ? 'fixed inset-y-0 left-0 z-40 flex w-60 translate-x-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition md:relative md:translate-x-0'
+    : 'fixed inset-y-0 left-0 z-40 flex w-60 -translate-x-full flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition md:relative md:translate-x-0';
+
   const isActiveLink = (path: string) => {
     const currentPath = location.pathname;
-    
-    // Exact matches for specific routes
+
     if (path === '/dashboard') {
-      return currentPath === '/dashboard';
+      return currentPath === '/' || currentPath === '/dashboard';
     }
-    if (path === '/defects/closed') {
-      return currentPath === '/defects/closed';
+    if (
+      path === '/defects/closed' ||
+      path === '/defects/create' ||
+      path === '/profile' ||
+      path === '/settings' ||
+      path === '/reports' ||
+      path === '/admin/users' ||
+      path === '/admin/deleted-defects'
+    ) {
+      return currentPath === path;
     }
-    if (path === '/defects/create') {
-      return currentPath === '/defects/create';
-    }
-    if (path === '/profile') {
-      return currentPath === '/profile';
-    }
-    if (path === '/settings') {
-      return currentPath === '/settings';
-    }
-    if (path === '/reports') {
-      return currentPath === '/reports';
-    }
-    if (path === '/admin/users') {
-      return currentPath === '/admin/users';
-    }
-    if (path === '/admin/deleted-defects') {
-      return currentPath === '/admin/deleted-defects';
-    }
-    
-    // For /defects, only match exact /defects or defect detail pages (but not closed/create)
+
     if (path === '/defects') {
-      return currentPath === '/defects' || 
-             (currentPath.startsWith('/defects/') && 
-              !currentPath.startsWith('/defects/closed') && 
-              !currentPath.startsWith('/defects/create') &&
-              currentPath.match(/^\/defects\/\d+/)); // Match defect detail pages like /defects/123
+      return (
+        currentPath === '/defects' ||
+        (currentPath.startsWith('/defects/') &&
+          !currentPath.startsWith('/defects/closed') &&
+          !currentPath.startsWith('/defects/create') &&
+          !!currentPath.match(/^\/defects\/\d+/))
+      );
     }
-    
+
     return currentPath.startsWith(path);
   };
 
-  // Get link classes based on active state
   const getLinkClasses = (path: string) => {
-    const baseClasses = "flex items-center px-6 py-3 text-base font-medium transition-colors duration-200";
-    const activeClasses = "bg-slate-800 dark:bg-gray-700 text-white border-r-2 border-blue-500";
-    const inactiveClasses = "text-gray-300 hover:bg-slate-800 dark:hover:bg-gray-700 hover:text-white";
-    
-    return `${baseClasses} ${isActiveLink(path) ? activeClasses : inactiveClasses}`;
+    const base =
+      'relative z-10 flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors';
+    if (isActiveLink(path)) {
+      return `${base} rounded-s-xl rounded-e-none border-y border-s border-border bg-background text-foreground`;
+    }
+    return `${base} rounded-md text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`;
   };
 
   return (
-    <div className={`${sidebarClass} w-64 bg-slate-900 dark:bg-gray-800 text-white flex flex-col h-screen overflow-hidden`}>
-      {/* Mobile close overlay */}
+    <>
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-10 bg-gray-600 opacity-75 md:hidden" 
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
           aria-hidden="true"
-        ></div>
+        />
       )}
-      
-      {/* Logo and App Name */}
-      <div className="flex items-center p-4 ">
-        <FiAlertCircle className="h-6 w-6 mr-2" />
-        <span className="text-xl font-semibold">DTS</span>
-      </div>
-      
-      {/* Navigation section */}
-      <div className="flex-1 overflow-y-auto">
-        <nav className="py-4">
-          <Link
-            to="/dashboard"
-            className={getLinkClasses('/dashboard')}
-          >
-            <FiHome className="mr-3 h-5 w-5" />
+
+      <aside className={sidebarClass}>
+        <div className="flex h-14 items-center gap-2 px-4">
+          <FiAlertCircle className="h-5 w-5 text-foreground" />
+          <span className="text-lg font-semibold tracking-tight">DTS</span>
+        </div>
+
+        <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-2">
+          <p className="px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+            Main
+          </p>
+          <Link to="/dashboard" className={getLinkClasses('/dashboard')}>
+            <FiHome className="h-4 w-4 shrink-0" />
             Dashboard
           </Link>
-          
-          <Link
-            to="/defects"
-            className={getLinkClasses('/defects')}
-          >
-            <FiList className="mr-3 h-5 w-5" />
+          <Link to="/defects" className={getLinkClasses('/defects')}>
+            <FiList className="h-4 w-4 shrink-0" />
             All Defects
           </Link>
-          
-          <Link
-            to="/defects/closed"
-            className={getLinkClasses('/defects/closed')}
-          >
-            <FiCheckCircle className="mr-3 h-5 w-5" />
+          <Link to="/defects/closed" className={getLinkClasses('/defects/closed')}>
+            <FiCheckCircle className="h-4 w-4 shrink-0" />
             Closed Defects
           </Link>
-          
-          <Link
-            to="/defects/create"
-            className={getLinkClasses('/defects/create')}
-          >
-            <FiPlus className="mr-3 h-5 w-5" />
+          <Link to="/defects/create" className={getLinkClasses('/defects/create')}>
+            <FiPlus className="h-4 w-4 shrink-0" />
             Create Defect
           </Link>
-          
-          <Link
-            to="/profile"
-            className={getLinkClasses('/profile')}
-          >
-            <FiUser className="mr-3 h-5 w-5" />
+          <Link to="/profile" className={getLinkClasses('/profile')}>
+            <FiUser className="h-4 w-4 shrink-0" />
             My Profile
           </Link>
-          
+
           {isAdmin() && (
             <>
-              <div className="h-px bg-slate-700 dark:bg-gray-700 my-2 mx-4"></div>
-              
-              <div className="px-6 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              <div className="mx-3 my-3 h-px bg-border" />
+              <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
                 Admin
-              </div>
-              
-              <Link
-                to="/admin/users"
-                className={getLinkClasses('/admin/users')}
-              >
-                <FiUsers className="mr-3 h-5 w-5" />
+              </p>
+              <Link to="/admin/users" className={getLinkClasses('/admin/users')}>
+                <FiUsers className="h-4 w-4 shrink-0" />
                 Users
               </Link>
-              
               <Link
                 to="/admin/deleted-defects"
                 className={getLinkClasses('/admin/deleted-defects')}
               >
-                <FiTrash2 className="mr-3 h-5 w-5" />
+                <FiTrash2 className="h-4 w-4 shrink-0" />
                 Deleted Defects
               </Link>
-              
-              <Link
-                to="/reports"
-                className={getLinkClasses('/reports')}
-              >
-                <FiFileText className="mr-3 h-5 w-5" />
+              <Link to="/reports" className={getLinkClasses('/reports')}>
+                <FiFileText className="h-4 w-4 shrink-0" />
                 Reports
               </Link>
-              
-              <Link
-                to="/settings"
-                className={getLinkClasses('/settings')}
-              >
-                <FiSettings className="mr-3 h-5 w-5" />
+              <Link to="/settings" className={getLinkClasses('/settings')}>
+                <FiSettings className="h-4 w-4 shrink-0" />
                 Settings
               </Link>
-              
-
-              
             </>
           )}
         </nav>
-      </div>
-      
-      {/* Footer note to ensure there's content at the bottom */}
-      <div className="mt-auto p-4  text-xs text-gray-500">
-        © Developed by <a href="https://hussain-elfalah.github.io/Portfolio/" className="text-blue-500 hover:text-blue-600">Hussain El Fallah</a>
-      </div>
-    </div>
+
+        <div className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
+          © Developed by{' '}
+          <a
+            href="https://hussain-elfalah.github.io/Portfolio/"
+            className="text-foreground underline-offset-2 hover:underline"
+          >
+            Hussain El Fallah
+          </a>
+        </div>
+      </aside>
+    </>
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

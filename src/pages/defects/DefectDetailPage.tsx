@@ -330,7 +330,7 @@ const DefectDetailPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center bg-gray-50 dark:bg-gray-900 min-h-full">
+      <div className="p-8 flex justify-center bg-muted min-h-full">
         <Loader />
       </div>
     );
@@ -338,12 +338,12 @@ const DefectDetailPage: React.FC = () => {
 
   if (error || !defect) {
     return (
-      <div className="p-8 bg-gray-50 dark:bg-gray-900 min-h-full">
-        <div className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-200 p-4 rounded-md">
+      <div className="p-8 bg-muted min-h-full">
+        <div className="bg-red-50 text-red-700 p-4 rounded-md">
           Error loading defect details. Please try again later.
           <button 
             onClick={() => refetchDefect()}
-            className="ml-4 px-4 py-2 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-200 rounded hover:bg-red-200 dark:hover:bg-red-700"
+            className="ml-4 px-4 py-2 bg-red-100 text-red-800 rounded hover:bg-red-200"
           >
             Retry
           </button>
@@ -357,12 +357,12 @@ const DefectDetailPage: React.FC = () => {
   const updatedDate = formatDateWithFallback(defect.updated_at);
 
   return (
-    <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
+    <div className="p-6 bg-muted min-h-full">
       {/* Back button */}
       <div className="mb-6">
         <button 
           onClick={handleBack} 
-          className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+          className="flex items-center text-muted-foreground hover:text-foreground"
         >
           <FiArrowLeft className="mr-2" />
           <span className="text-lg font-medium">Back to Defects</span>
@@ -373,19 +373,19 @@ const DefectDetailPage: React.FC = () => {
         {/* Main content column */}
         <div className="lg:col-span-2 space-y-6">
           {/* Defect title and info */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div className="bg-card rounded-lg shadow p-6">
             <div className="flex justify-between items-start mb-3">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{defect.title || 'Untitled Defect'}</h1>
+              <h1 className="text-2xl font-bold text-foreground">{defect.title || 'Untitled Defect'}</h1>
               <DefectStatusBadge status={defect.status || 'open'} />
             </div>
             
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+            <div className="text-sm text-muted-foreground mb-6">
               Defect #{id} • Created {createdDate}
             </div>
             
-            <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Description</h2>
-              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+            <div className="border-t border-border pt-4">
+              <h2 className="text-lg font-medium text-foreground mb-3">Description</h2>
+              <p className="text-foreground whitespace-pre-line">
                 {defect.description || 'No description provided.'}
               </p>
             </div>
@@ -393,7 +393,7 @@ const DefectDetailPage: React.FC = () => {
 
           {/* Solutions section - only for resolved or closed defects */}
           {(defect.status === 'resolved' || defect.status === 'closed') && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div className="bg-card rounded-lg shadow">
               <div className="p-6">
                 <Solutions 
                   defectId={Number(id)} 
@@ -405,9 +405,9 @@ const DefectDetailPage: React.FC = () => {
           )}
 
           {/* Comments section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="p-6 border-b border-gray-100 dark:border-gray-700">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white">Comments</h2>
+          <div className="bg-card rounded-lg shadow">
+            <div className="p-6 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">Comments</h2>
             </div>
 
             <div className="p-6">
@@ -424,53 +424,53 @@ const DefectDetailPage: React.FC = () => {
         {/* Side panel */}
         <div className="space-y-6">
           {/* Details section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="p-6 border-b border-gray-100 dark:border-gray-700">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white">Details</h2>
+          <div className="bg-card rounded-lg shadow">
+            <div className="p-6 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">Details</h2>
             </div>
             
             <div className="p-6 space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Assigned To</h3>
-                <p className="mt-1 text-sm text-gray-900 dark:text-white">
+                <h3 className="text-sm font-medium text-muted-foreground">Assigned To</h3>
+                <p className="mt-1 text-sm text-foreground">
                   {defect.assigned_to_name || 
                    (defect.assigned_to?.username ? defect.assigned_to.username : 'Unassigned')}
                 </p>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Created By</h3>
-                <p className="mt-1 text-sm text-gray-900 dark:text-white">
+                <h3 className="text-sm font-medium text-muted-foreground">Created By</h3>
+                <p className="mt-1 text-sm text-foreground">
                   {defect.created_by_name || 
                    (defect.created_by?.username ? defect.created_by.username : 'Unknown')}
                 </p>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Priority</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">Priority</h3>
                 <div className="mt-1">
                   <DefectSeverityBadge severity={defect.severity || 'medium'} />
                 </div>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Created</h3>
-                <p className="mt-1 text-sm text-gray-900 dark:text-white">{createdDate}</p>
+                <h3 className="text-sm font-medium text-muted-foreground">Created</h3>
+                <p className="mt-1 text-sm text-foreground">{createdDate}</p>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Updated</h3>
-                <p className="mt-1 text-sm text-gray-900 dark:text-white">{updatedDate}</p>
+                <h3 className="text-sm font-medium text-muted-foreground">Last Updated</h3>
+                <p className="mt-1 text-sm text-foreground">{updatedDate}</p>
               </div>
               
               {defect.tags && defect.tags.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Tags</h3>
+                  <h3 className="text-sm font-medium text-muted-foreground">Tags</h3>
                   <div className="mt-1 flex flex-wrap gap-1">
                     {defect.tags.map((tag: any, index: number) => (
                       <span 
                         key={tag.id || `tag-${index}`} 
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-foreground"
                       >
                         {typeof tag === 'string' ? tag : tag.name || `Tag ${index}`}
                       </span>
@@ -481,25 +481,25 @@ const DefectDetailPage: React.FC = () => {
 
               {/* Attachments section */}
               <div>
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Attachments</h3>
+                <h3 className="text-sm font-medium text-muted-foreground">Attachments</h3>
                 <div className="mt-2 space-y-2">
                   {(!defect.attachments || defect.attachments.length === 0) ? (
-                    <p className="text-sm text-gray-400 dark:text-gray-500">No attachments</p>
+                    <p className="text-sm text-muted-foreground">No attachments</p>
                   ) : (
                     defect.attachments.map((attachment: any, index: number) => (
                       <div
                         key={attachment.id || `attachment-${index}`}
-                        className="flex items-center justify-between p-2 border border-gray-200 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+                        className="flex items-center justify-between p-2 border border-border rounded-md hover:bg-muted"
                       >
                         <div className="flex items-center space-x-2 flex-1 min-w-0">
-                          <svg className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-muted-foreground flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                           </svg>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                            <p className="text-sm font-medium text-foreground truncate">
                               {attachment.filename || attachment.name || 'Unknown file'}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                            <p className="text-xs text-muted-foreground">
                               {attachment.size ? (
                                 attachment.size < 1024 * 1024
                                   ? `${(attachment.size / 1024).toFixed(1)} KB`
@@ -513,7 +513,7 @@ const DefectDetailPage: React.FC = () => {
                             href={attachment.url || attachment.path || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400"
+                            className="p-1 text-muted-foreground hover:text-foreground"
                             title="Download"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -523,7 +523,7 @@ const DefectDetailPage: React.FC = () => {
                           {canEditDefect && (
                             <button
                               type="button"
-                              className="p-1 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400"
+                              className="p-1 text-muted-foreground hover:text-red-600"
                               onClick={() => {
                                 if (window.confirm('Are you sure you want to delete this attachment?')) {
                                   // Handle delete attachment
@@ -552,7 +552,7 @@ const DefectDetailPage: React.FC = () => {
                   {/* Upload new attachment button */}
                   {canEditDefect && (
                     <div className="mt-3">
-                      <label className="cursor-pointer inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none w-full justify-center">
+                      <label className="cursor-pointer inline-flex items-center px-3 py-2 border border-border shadow-sm text-sm leading-4 font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none w-full justify-center">
                         <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
@@ -591,9 +591,9 @@ const DefectDetailPage: React.FC = () => {
           </div>
 
           {/* Actions section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="p-6 border-b border-gray-100 dark:border-gray-700">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white">Actions</h2>
+          <div className="bg-card rounded-lg shadow">
+            <div className="p-6 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">Actions</h2>
             </div>
             
             <div className="p-6 space-y-3">
@@ -601,7 +601,7 @@ const DefectDetailPage: React.FC = () => {
                 to={`/defects/edit/${id}`}
                 state={{ from: location.pathname }}
                 onClick={handleEditClick}
-                className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full flex justify-center items-center px-4 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
               >
                 <FiEdit2 className="mr-2" />
                 Edit Defect
@@ -612,7 +612,7 @@ const DefectDetailPage: React.FC = () => {
                 <button
                   onClick={handleDeleteDefect}
                   disabled={deleteDefectMutation.isPending}
-                  className="w-full flex justify-center items-center px-4 py-2 border border-red-300 dark:border-red-600 shadow-sm text-sm font-medium rounded-md text-red-700 dark:text-red-400 bg-white dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex justify-center items-center px-4 py-2 border border-red-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-card hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FiTrash2 className="mr-2" />
                   {deleteDefectMutation.isPending ? 'Deleting...' : 'Delete Defect'}
@@ -630,15 +630,15 @@ const DefectDetailPage: React.FC = () => {
           </div>
           
           {/* History section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-            <div className="p-6 border-b border-gray-100 dark:border-gray-700">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white">History</h2>
+          <div className="bg-card rounded-lg shadow">
+            <div className="p-6 border-b border-border">
+              <h2 className="text-lg font-medium text-foreground">History</h2>
             </div>
             
             <div className="p-6">
               <button
                 onClick={showVersionHistory}
-                className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full flex justify-center items-center px-4 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
               >
                 <FiClock className="mr-2" />
                 View Version History

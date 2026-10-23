@@ -284,7 +284,7 @@ const DefectEditPage: React.FC = () => {
   // Loading state
   if (isLoadingDefect) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-muted min-h-screen flex items-center justify-center">
         <Loader />
       </div>
     );
@@ -293,15 +293,15 @@ const DefectEditPage: React.FC = () => {
   // Error state
   if (defectError) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-muted min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Error Loading Defect</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <h1 className="text-2xl font-semibold text-foreground mb-4">Error Loading Defect</h1>
+          <p className="text-muted-foreground mb-4">
             {defectError instanceof Error ? defectError.message : 'Failed to load defect data'}
           </p>
           <button
             onClick={() => navigate('/defects')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
           >
             Back to Defects
           </button>
@@ -313,15 +313,15 @@ const DefectEditPage: React.FC = () => {
   // No defect found
   if (!defect) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-muted min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Defect Not Found</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <h1 className="text-2xl font-semibold text-foreground mb-4">Defect Not Found</h1>
+          <p className="text-muted-foreground mb-4">
             The defect you're looking for doesn't exist or you don't have permission to view it.
           </p>
           <button
             onClick={() => navigate('/defects')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
           >
             Back to Defects
           </button>
@@ -348,16 +348,16 @@ const DefectEditPage: React.FC = () => {
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-800 bg-opacity-70 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl overflow-hidden">
+      <div className="bg-card rounded-lg shadow-xl w-full max-w-2xl overflow-hidden">
         {/* Header */}
         <div className="p-6">
           <div className="flex items-center">
-            <div className="bg-blue-100 p-2 rounded-full mr-3">
-              <FiEdit2 className="h-6 w-6 text-blue-600" />
+            <div className="bg-muted p-2 rounded-full mr-3">
+              <FiEdit2 className="h-6 w-6 text-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Edit Defect</h1>
-              <p className="mt-1 text-sm text-gray-500">
+              <h1 className="text-xl font-semibold text-foreground">Edit Defect</h1>
+              <p className="mt-1 text-sm text-muted-foreground">
                 Please fill in the form to update the defect details.
               </p>
             </div>
@@ -368,15 +368,15 @@ const DefectEditPage: React.FC = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Title */}
             <div className="mb-4">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="title" className="block text-sm font-medium text-foreground mb-1">
                 Title <span className="text-red-500">*</span>
               </label>
               <input
                 id="title"
                 type="text"
                 className={`block w-full px-3 py-2 border ${
-                  errors.title ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                  errors.title ? 'border-red-300' : 'border-border'
+                } rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring`}
                 {...register('title')}
               />
               {errors.title && (
@@ -386,15 +386,15 @@ const DefectEditPage: React.FC = () => {
             
             {/* Description */}
             <div className="mb-4">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="description" className="block text-sm font-medium text-foreground mb-1">
                 Description <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="description"
                 rows={4}
                 className={`block w-full px-3 py-2 border ${
-                  errors.description ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                  errors.description ? 'border-red-300' : 'border-border'
+                } rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring`}
                 {...register('description')}
               />
               {errors.description && (
@@ -404,14 +404,14 @@ const DefectEditPage: React.FC = () => {
             
             {/* Severity */}
             <div className="mb-4">
-              <label htmlFor="severity" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="severity" className="block text-sm font-medium text-foreground mb-1">
                 Priority <span className="text-red-500">*</span>
               </label>
               <select
                 id="severity"
                 className={`block w-full px-3 py-2 border ${
-                  errors.severity ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                  errors.severity ? 'border-red-300' : 'border-border'
+                } rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring`}
                 {...register('severity')}
               >
                 <option value="low">Low</option>
@@ -426,14 +426,14 @@ const DefectEditPage: React.FC = () => {
             
             {/* Status */}
             <div className="mb-4">
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="status" className="block text-sm font-medium text-foreground mb-1">
                 Status <span className="text-red-500">*</span>
               </label>
               <select
                 id="status"
                 className={`block w-full px-3 py-2 border ${
-                  errors.status ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                  errors.status ? 'border-red-300' : 'border-border'
+                } rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring`}
                 {...register('status')}
               >
                 <option value="open">Open</option>
@@ -448,7 +448,7 @@ const DefectEditPage: React.FC = () => {
             
             {/* Assigned To */}
             <div className="mb-4">
-              <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="assignedTo" className="block text-sm font-medium text-foreground mb-1">
                 Assigned To
               </label>
               <Controller
@@ -461,7 +461,7 @@ const DefectEditPage: React.FC = () => {
                   return (
                     <select
                       id="assignedTo"
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring bg-card text-foreground"
                       value={isValidUserId ? String(field.value) : ''}
                       onChange={(e) => {
                         const newValue = e.target.value ? Number(e.target.value) : null;
@@ -482,7 +482,7 @@ const DefectEditPage: React.FC = () => {
             
             {/* Tags */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Tags
               </label>
               <div className="flex flex-wrap gap-2 mb-2">
@@ -492,8 +492,8 @@ const DefectEditPage: React.FC = () => {
                     type="button"
                     className={`px-3 py-1 text-sm rounded-md ${
                       selectedTags.includes(tag)
-                        ? 'bg-blue-100 text-blue-800 border border-blue-300'
-                        : 'bg-gray-100 text-gray-800 border border-gray-300 hover:bg-gray-200'
+                        ? 'bg-muted text-foreground border border-border'
+                        : 'bg-muted text-foreground border border-border hover:bg-accent'
                     }`}
                     onClick={() => toggleTag(tag)}
                   >
@@ -505,28 +505,28 @@ const DefectEditPage: React.FC = () => {
             
             {/* Attachments */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Add Attachment
               </label>
               <div 
                 className={`border-2 border-dashed rounded-md p-6 text-center ${
-                  isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'
+                  isDragging ? 'border-primary bg-muted' : 'border-border'
                 }`}
                 onDrop={handleFileDrop}
                 onDragOver={handleFileDragOver}
                 onDragLeave={handleFileDragLeave}
               >
                 <div className="flex flex-col items-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <svg className="mx-auto h-12 w-12 text-muted-foreground" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                     <path d="M24 30.0c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M24 16v-8m0 32v-8m16-16h-8m-16 0H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   
-                  <div className="mt-2 text-sm text-gray-600">
-                    <label htmlFor="file-upload" className="cursor-pointer text-blue-600 font-medium hover:text-blue-500">
+                  <div className="mt-2 text-sm text-muted-foreground">
+                    <label htmlFor="file-upload" className="cursor-pointer text-foreground font-medium hover:text-foreground">
                       Click to upload
                     </label>
-                    <span className="text-gray-500"> or drag and drop</span>
+                    <span className="text-muted-foreground"> or drag and drop</span>
                     <input 
                       id="file-upload" 
                       name="file-upload" 
@@ -535,14 +535,14 @@ const DefectEditPage: React.FC = () => {
                       onChange={handleFileChange}
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     PDF, DOC, DOCX, XLS/XLSX, PNG, JPG up to 10MB
                   </p>
                 </div>
                 
                 {file && (
                   <div className="mt-4 flex items-center justify-center text-sm">
-                    <span className="text-blue-600">{file.name}</span>
+                    <span className="text-foreground">{file.name}</span>
                     <button
                       type="button"
                       className="ml-2 text-red-600 hover:text-red-800"
@@ -559,7 +559,7 @@ const DefectEditPage: React.FC = () => {
             <div className="flex justify-end space-x-3 mt-6">
               <button
                 type="button"
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
+                className="px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-md shadow-sm hover:bg-muted focus:outline-none"
                 onClick={handleBack}
               >
                 Cancel
@@ -579,21 +579,21 @@ const DefectEditPage: React.FC = () => {
       {/* Solution Requirement Modal */}
       {showSolutionModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
+          <div className="bg-card rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-medium text-foreground mb-4">
               Solution Required
             </h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               A solution is required when closing a defect. Please provide details about how this defect was resolved.
             </p>
             <div className="mb-4">
-              <label htmlFor="solution" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="solution" className="block text-sm font-medium text-foreground mb-2">
                 Solution <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="solution"
                 rows={4}
-                className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring"
                 placeholder="Describe how this defect was resolved..."
                 value={solutionText}
                 onChange={(e) => setSolutionText(e.target.value)}
@@ -602,7 +602,7 @@ const DefectEditPage: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 type="button"
-                className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
+                className="flex-1 px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-md shadow-sm hover:bg-muted focus:outline-none"
                 onClick={() => {
                   setShowSolutionModal(false);
                   setSolutionText('');
@@ -613,7 +613,7 @@ const DefectEditPage: React.FC = () => {
               </button>
               <button
                 type="button"
-                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
+                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-primary rounded-md shadow-sm hover:bg-primary/90 focus:outline-none"
                 onClick={handleSolutionSubmit}
                 disabled={!solutionText.trim()}
               >

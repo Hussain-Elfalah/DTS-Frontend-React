@@ -84,7 +84,7 @@ const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({ defectId }) => 
     <div className="space-y-4">
       <div
         className={`border-2 border-dashed rounded-md p-6 ${
-          dragActive ? 'border-primary bg-blue-50' : 'border-gray-300'
+          dragActive ? 'border-primary bg-muted' : 'border-border'
         }`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -93,12 +93,12 @@ const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({ defectId }) => 
         onClick={() => fileInputRef.current?.click()}
       >
         <div className="text-center">
-          <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
+          <FiUpload className="mx-auto h-12 w-12 text-muted-foreground" />
           <div className="mt-2">
-            <p className="text-sm font-medium text-gray-900">
+            <p className="text-sm font-medium text-foreground">
               Drag and drop files here, or click to select files
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Upload multiple files of any type
             </p>
           </div>
@@ -114,15 +114,15 @@ const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({ defectId }) => 
       
       {files.length > 0 && (
         <div className="space-y-2">
-          <h4 className="text-sm font-medium text-gray-700">
+          <h4 className="text-sm font-medium text-foreground">
             Files to upload ({files.length})
           </h4>
           <ul className="space-y-2">
             {files.map((file, index) => (
-              <li key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+              <li key={index} className="flex items-center justify-between bg-muted p-2 rounded">
                 <div className="flex items-center">
                   <span className="text-sm truncate max-w-xs">{file.name}</span>
-                  <span className="ml-2 text-xs text-gray-500">
+                  <span className="ml-2 text-xs text-muted-foreground">
                     ({file.size < 1024 * 1024
                       ? `${(file.size / 1024).toFixed(1)} KB`
                       : `${(file.size / (1024 * 1024)).toFixed(1)} MB`})
@@ -130,7 +130,7 @@ const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({ defectId }) => 
                 </div>
                 <button
                   type="button"
-                  className="text-gray-400 hover:text-red-500"
+                  className="text-muted-foreground hover:text-red-500"
                   onClick={(e) => {
                     e.stopPropagation();
                     removeFile(index);
@@ -145,7 +145,7 @@ const AttachmentUploader: React.FC<AttachmentUploaderProps> = ({ defectId }) => 
           <div className="flex justify-end">
             <button
               type="button"
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-700 focus:outline-none"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none"
               onClick={handleUpload}
               disabled={isUploading}
             >

@@ -11,9 +11,6 @@ import {
   FiEye,
   FiEyeOff,
   // FiGlobe,
-  FiMoon,
-  FiSun,
-  FiMonitor,
   FiLock,
   FiActivity,
   // FiMail,
@@ -22,7 +19,6 @@ import {
   // FiX
 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 
 interface TabProps {
   id: string;
@@ -37,8 +33,8 @@ const Tab: React.FC<TabProps> = ({ id, label, icon, isActive, onClick }) => (
     onClick={onClick}
     className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
       isActive
-        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
-        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
+        ? 'bg-muted text-foreground border border-border'
+        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
     }`}
   >
     <span className="mr-3">{icon}</span>
@@ -48,7 +44,6 @@ const Tab: React.FC<TabProps> = ({ id, label, icon, isActive, onClick }) => (
 
 const SettingsPage: React.FC = () => {
   const { user } = useAuth();
-  const { theme, setTheme } = useTheme();
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState('profile');
   const [showPassword, setShowPassword] = useState(false);
@@ -130,10 +125,10 @@ const SettingsPage: React.FC = () => {
   const renderProfileTab = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Profile Information</h3>
+        <h3 className="text-lg font-medium text-foreground">Profile Information</h3>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+          className="flex items-center px-3 py-2 text-sm font-medium text-foreground hover:text-foreground"
         >
           <FiEdit2 className="mr-2 h-4 w-4" />
           {isEditing ? 'Cancel' : 'Edit'}
@@ -143,7 +138,7 @@ const SettingsPage: React.FC = () => {
       <form onSubmit={handleProfileUpdate} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Username
             </label>
             <input
@@ -151,12 +146,12 @@ const SettingsPage: React.FC = () => {
               value={formData.username}
               onChange={(e) => handleInputChange('username', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Email
             </label>
             <input
@@ -164,12 +159,12 @@ const SettingsPage: React.FC = () => {
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               First Name
             </label>
             <input
@@ -177,12 +172,12 @@ const SettingsPage: React.FC = () => {
               value={formData.first_name}
               onChange={(e) => handleInputChange('first_name', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Last Name
             </label>
             <input
@@ -190,12 +185,12 @@ const SettingsPage: React.FC = () => {
               value={formData.last_name}
               onChange={(e) => handleInputChange('last_name', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Department
             </label>
             <input
@@ -203,12 +198,12 @@ const SettingsPage: React.FC = () => {
               value={formData.department}
               onChange={(e) => handleInputChange('department', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Job Title
             </label>
             <input
@@ -216,7 +211,7 @@ const SettingsPage: React.FC = () => {
               value={formData.job_title}
               onChange={(e) => handleInputChange('job_title', e.target.value)}
               disabled={!isEditing}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring disabled:bg-muted disabled:text-muted-foreground bg-card text-foreground"
             />
           </div>
         </div>
@@ -226,14 +221,14 @@ const SettingsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={updateProfileMutation.isPending}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
             >
               <FiSave className="mr-2 h-4 w-4" />
               {updateProfileMutation.isPending ? 'Saving...' : 'Save Changes'}
@@ -246,45 +241,15 @@ const SettingsPage: React.FC = () => {
 
   const renderPreferencesTab = () => (
     <div className="space-y-6">
-      <h3 className="text-lg font-medium text-gray-900 dark:text-white">Preferences</h3>
-      
+      <h3 className="text-lg font-semibold tracking-tight text-foreground">Preferences</h3>
+
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-            Theme
-          </label>
-          <div className="space-y-2">
-            {[
-              { value: 'light', label: 'Light', icon: <FiSun /> },
-              { value: 'dark', label: 'Dark', icon: <FiMoon /> },
-              { value: 'system', label: 'System', icon: <FiMonitor /> }
-            ].map((option) => (
-              <label key={option.value} className="flex items-center">
-                <input
-                  type="radio"
-                  name="theme"
-                  value={option.value}
-                  checked={theme === option.value}
-                  onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-                />
-                <span className="ml-3 flex items-center text-sm text-gray-700 dark:text-gray-300">
-                  <span className="mr-2">{option.icon}</span>
-                  {option.label}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Language
-          </label>
+          <label className="form-label">Language</label>
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="form-input"
           >
             <option value="en">English</option>
             <option value="ar">Arabic</option>
@@ -296,7 +261,7 @@ const SettingsPage: React.FC = () => {
 
   // const renderNotificationsTab = () => (
   //   <div className="space-y-6">
-  //     <h3 className="text-lg font-medium text-gray-900 dark:text-white">Notification Settings</h3>
+  //     <h3 className="text-lg font-medium text-foreground">Notification Settings</h3>
       
   //     <div className="space-y-4">
   //       {[
@@ -312,14 +277,14 @@ const SettingsPage: React.FC = () => {
   //               id={notification.id}
   //               type="checkbox"
   //               defaultChecked={true}
-  //               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+  //               className="h-4 w-4 text-foreground focus:ring-ring border-border rounded"
   //             />
   //           </div>
   //           <div className="ml-3">
-  //             <label htmlFor={notification.id} className="text-sm font-medium text-gray-700 dark:text-gray-300">
+  //             <label htmlFor={notification.id} className="text-sm font-medium text-foreground">
   //               {notification.label}
   //             </label>
-  //             <p className="text-sm text-gray-500 dark:text-gray-400">{notification.description}</p>
+  //             <p className="text-sm text-muted-foreground">{notification.description}</p>
   //           </div>
   //         </div>
   //       ))}
@@ -329,14 +294,14 @@ const SettingsPage: React.FC = () => {
 
   const renderSecurityTab = () => (
     <div className="space-y-6">
-      <h3 className="text-lg font-medium text-gray-900 dark:text-white">Security Settings</h3>
+      <h3 className="text-lg font-medium text-foreground">Security Settings</h3>
       
       <div className="space-y-6">
         <div>
-          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Change Password</h4>
+          <h4 className="text-sm font-medium text-foreground mb-4">Change Password</h4>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Current Password
               </label>
               <div className="relative">
@@ -344,45 +309,45 @@ const SettingsPage: React.FC = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={formData.currentPassword}
                   onChange={(e) => handleInputChange('currentPassword', e.target.value)}
-                  className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-3 py-2 pr-10 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-card text-foreground"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
-                  {showPassword ? <FiEyeOff className="h-4 w-4 text-gray-400 dark:text-gray-500" /> : <FiEye className="h-4 w-4 text-gray-400 dark:text-gray-500" />}
+                  {showPassword ? <FiEyeOff className="h-4 w-4 text-muted-foreground" /> : <FiEye className="h-4 w-4 text-muted-foreground" />}
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 New Password
               </label>
               <input
                 type="password"
                 value={formData.newPassword}
                 onChange={(e) => handleInputChange('newPassword', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-card text-foreground"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Confirm New Password
               </label>
               <input
                 type="password"
                 value={formData.confirmPassword}
                 onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-card text-foreground"
               />
             </div>
 
             <button
               type="button"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <FiLock className="mr-2 h-4 w-4" />
               Update Password
@@ -390,28 +355,28 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Account Security</h4>
+        {/* <div className="border-t border-border pt-6">
+          <h4 className="text-sm font-medium text-foreground mb-4">Account Security</h4>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Two-Factor Authentication</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Add an extra layer of security to your account</p>
+                <p className="text-sm font-medium text-foreground">Two-Factor Authentication</p>
+                <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
               </div>
-              <button className="px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
+              <button className="px-3 py-2 text-sm font-medium text-foreground hover:text-foreground">
                 Enable
               </button>
             </div>
             
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Login Notifications</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Get notified when someone logs into your account</p>
+                <p className="text-sm font-medium text-foreground">Login Notifications</p>
+                <p className="text-sm text-muted-foreground">Get notified when someone logs into your account</p>
               </div>
               <input
                 type="checkbox"
                 defaultChecked={true}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-foreground focus:ring-ring border-border rounded"
               />
             </div>
           </div>
@@ -422,7 +387,7 @@ const SettingsPage: React.FC = () => {
 
   // const renderActivityTab = () => (
   //   <div className="space-y-6">
-  //     <h3 className="text-lg font-medium text-gray-900 dark:text-white">Recent Activity</h3>
+  //     <h3 className="text-lg font-medium text-foreground">Recent Activity</h3>
       
   //     <div className="space-y-4">
   //       {[
@@ -432,13 +397,13 @@ const SettingsPage: React.FC = () => {
   //         { action: 'Updated notification preferences', time: '1 week ago', icon: <FiBell /> },
   //         { action: 'Created defect #DEF-001', time: '2 weeks ago', icon: <FiActivity /> }
   //       ].map((activity, index) => (
-  //         <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-  //           <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-  //             <span className="text-blue-600 dark:text-blue-400">{activity.icon}</span>
+  //         <div key={index} className="flex items-center space-x-3 p-3 bg-muted rounded-lg">
+  //           <div className="flex-shrink-0 w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+  //             <span className="text-foreground">{activity.icon}</span>
   //           </div>
   //           <div className="flex-1">
-  //             <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.action}</p>
-  //             <p className="text-sm text-gray-500 dark:text-gray-400">{activity.time}</p>
+  //             <p className="text-sm font-medium text-foreground">{activity.action}</p>
+  //             <p className="text-sm text-muted-foreground">{activity.time}</p>
   //           </div>
   //         </div>
   //       ))}
@@ -455,44 +420,37 @@ const SettingsPage: React.FC = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Settings</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Manage your account settings and preferences
-          </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Settings</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Manage your account settings and preferences
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="lg:w-60 flex-shrink-0">
+          <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+            <nav className="space-y-1">
+              {tabs.map((tab) => (
+                <Tab
+                  key={tab.id}
+                  id={tab.id}
+                  label={tab.label}
+                  icon={tab.icon}
+                  isActive={activeTab === tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                />
+              ))}
+            </nav>
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
-          <div className="lg:w-64 flex-shrink-0">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-              <nav className="space-y-2">
-                {tabs.map((tab) => (
-                  <Tab
-                    key={tab.id}
-                    id={tab.id}
-                    label={tab.label}
-                    icon={tab.icon}
-                    isActive={activeTab === tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                  />
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="flex-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              {activeTab === 'profile' && renderProfileTab()}
-              {activeTab === 'preferences' && renderPreferencesTab()}
-              {/* {activeTab === 'notifications' && renderNotificationsTab()} */}
-              {activeTab === 'security' && renderSecurityTab()}
-              {/* {activeTab === 'activity' && renderActivityTab()} */}
-            </div>
+        <div className="flex-1">
+          <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+            {activeTab === 'profile' && renderProfileTab()}
+            {activeTab === 'preferences' && renderPreferencesTab()}
+            {activeTab === 'security' && renderSecurityTab()}
           </div>
         </div>
       </div>

@@ -129,13 +129,13 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
     : isLoadingOpen || isLoadingInProgress;
   
   return (
-    <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-full">
+    <div className="p-6 bg-muted min-h-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-semibold text-foreground">
             {showClosed ? 'Closed Defects' : 'All Defects'}
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-muted-foreground">
             {showClosed 
               ? 'View and manage resolved and closed defects' 
               : 'View and manage open and in-progress defects'
@@ -146,11 +146,11 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
         <div className="mt-4 sm:mt-0 flex space-x-3">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+              <FiSearch className="h-4 w-4 text-muted-foreground" />
             </div>
             <input
               type="text"
-              className="block w-64 pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-64 pl-10 pr-3 py-2 border border-border rounded-md leading-5 bg-card placeholder-muted-foreground text-foreground focus:outline-none focus:ring-ring focus:border-ring sm:text-sm"
               placeholder="Search defects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -159,7 +159,7 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
           
           <button
             onClick={refreshData}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted border border-border"
             title="Refresh"
           >
             <FiRefreshCw className="h-4 w-4" />
@@ -168,7 +168,7 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
           {!showClosed && (
             <Link
               to="/defects/create"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none"
             >
               <FiPlus className="mr-2 -ml-1 h-5 w-5" />
               New Defect
@@ -177,42 +177,42 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
         </div>
       </div>
       
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+      <div className="bg-card rounded-lg shadow overflow-hidden">
         {isLoading ? (
           <div className="py-10 flex justify-center">
             <Loader />
           </div>
         ) : !resolvedClosedDefects.length && !openInProgressDefects.length ? (
           <div className="p-10 text-center">
-            <p className="text-gray-500 dark:text-gray-400 text-base">
+            <p className="text-muted-foreground text-base">
               {showClosed ? 'No closed defects found' : 'No defects found'}
             </p>
           </div>
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <table className="min-w-full divide-y divide-border">
                 <thead>
-                  <tr className="bg-gray-50 dark:bg-gray-700">
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                  <tr className="bg-muted">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       No.
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Issue Title
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       Created By
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       Created At
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       Assigned To
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       Status
                     </th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                       Actions
                     </th>
                   </tr>
@@ -222,44 +222,44 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
                     resolvedClosedDefects.map((defect: any, index: number) => (
                       <tr 
                         key={defect.id} 
-                        className={`hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${index !== resolvedClosedDefects.length - 1 ? 'border-b border-gray-200 dark:border-gray-700' : ''}`}
+                        className={`hover:bg-muted transition-colors ${index !== resolvedClosedDefects.length - 1 ? 'border-b border-border' : ''}`}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                           DFT-{new Date().getFullYear()}-{String(defect.id || '0000').padStart(4, '0')}
                         </td>
                         <td className="px-6 py-4">
                           <Link to={`/defects/${defect.id}`} className="hover:underline">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">{defect.title || 'Untitled Defect'}</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{defect.description || 'No description provided'}</div>
+                            <div className="text-sm font-medium text-foreground">{defect.title || 'Untitled Defect'}</div>
+                            <div className="text-sm text-muted-foreground line-clamp-1">{defect.description || 'No description provided'}</div>
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm">
+                            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-foreground font-semibold text-sm">
                               {defect.created_by?.username 
                                 ? defect.created_by.username.charAt(0).toUpperCase() 
                                 : defect.creator_name 
                                   ? defect.creator_name.charAt(0).toUpperCase() 
                                   : 'U'}
                             </div>
-                            <span className="ml-2 text-sm text-gray-900 dark:text-white">
+                            <span className="ml-2 text-sm text-foreground">
                               {defect.created_by?.username || defect.creator_name || 'Unknown'}
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                           {defect.created_at ? format(new Date(defect.created_at), 'MMM d, yyyy') : '-'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold text-sm">
+                            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground font-semibold text-sm">
                               {defect.assigned_to?.username 
                                 ? defect.assigned_to.username.charAt(0).toUpperCase() 
                                 : defect.assignee_name 
                                   ? defect.assignee_name.charAt(0).toUpperCase() 
                                   : 'U'}
                             </div>
-                            <span className="ml-2 text-sm text-gray-900 dark:text-white">
+                            <span className="ml-2 text-sm text-foreground">
                               {defect.assigned_to?.username || defect.assignee_name || 'Unassigned'}
                             </span>
                           </div>
@@ -270,7 +270,7 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link 
                             to={`/defects/${defect.id}`} 
-                            className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+                            className="text-foreground hover:text-foreground"
                           >
                             <div className="flex items-center justify-end">
                               <span className="sr-only">View Details</span>
@@ -284,44 +284,44 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
                     openInProgressDefects.map((defect: any, index: number) => (
                       <tr 
                         key={defect.id} 
-                        className={`hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${index !== openInProgressDefects.length - 1 ? 'border-b border-gray-200 dark:border-gray-700' : ''}`}
+                        className={`hover:bg-muted transition-colors ${index !== openInProgressDefects.length - 1 ? 'border-b border-border' : ''}`}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                           DFT-{new Date().getFullYear()}-{String(defect.id || '0000').padStart(4, '0')}
                         </td>
                         <td className="px-6 py-4">
                           <Link to={`/defects/${defect.id}`} className="hover:underline">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">{defect.title || 'Untitled Defect'}</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{defect.description || 'No description provided'}</div>
+                            <div className="text-sm font-medium text-foreground">{defect.title || 'Untitled Defect'}</div>
+                            <div className="text-sm text-muted-foreground line-clamp-1">{defect.description || 'No description provided'}</div>
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm">
+                            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-foreground font-semibold text-sm">
                               {defect.created_by?.username 
                                 ? defect.created_by.username.charAt(0).toUpperCase() 
                                 : defect.creator_name 
                                   ? defect.creator_name.charAt(0).toUpperCase() 
                                   : 'U'}
                             </div>
-                            <span className="ml-2 text-sm text-gray-900 dark:text-white">
+                            <span className="ml-2 text-sm text-foreground">
                               {defect.created_by?.username || defect.creator_name || 'Unknown'}
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                           {defect.created_at ? format(new Date(defect.created_at), 'MMM d, yyyy') : '-'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold text-sm">
+                            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground font-semibold text-sm">
                               {defect.assigned_to?.username 
                                 ? defect.assigned_to.username.charAt(0).toUpperCase() 
                                 : defect.assignee_name 
                                   ? defect.assignee_name.charAt(0).toUpperCase() 
                                   : 'U'}
                             </div>
-                            <span className="ml-2 text-sm text-gray-900 dark:text-white">
+                            <span className="ml-2 text-sm text-foreground">
                               {defect.assigned_to?.username || defect.assignee_name || 'Unassigned'}
                             </span>
                           </div>
@@ -332,7 +332,7 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link 
                             to={`/defects/${defect.id}`} 
-                            className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+                            className="text-foreground hover:text-foreground"
                           >
                             <div className="flex items-center justify-end">
                               <span className="sr-only">View Details</span>
@@ -347,14 +347,14 @@ const DefectsListPage: React.FC<DefectsListPageProps> = ({ showClosed = false })
               </table>
             </div>
             
-            <div className="px-6 py-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                Showing <span className="font-medium text-gray-700 dark:text-gray-300">1</span> to{' '}
-                <span className="font-medium text-gray-700 dark:text-gray-300">{showClosed ? resolvedClosedDefects.length : openInProgressDefects.length}</span> of{' '}
-                <span className="font-medium text-gray-700 dark:text-gray-300">{showClosed ? resolvedClosedDefects.length : openInProgressDefects.length}</span> results
+            <div className="px-6 py-3 bg-card border-t border-border flex items-center justify-between">
+              <div className="text-sm text-muted-foreground">
+                Showing <span className="font-medium text-foreground">1</span> to{' '}
+                <span className="font-medium text-foreground">{showClosed ? resolvedClosedDefects.length : openInProgressDefects.length}</span> of{' '}
+                <span className="font-medium text-foreground">{showClosed ? resolvedClosedDefects.length : openInProgressDefects.length}</span> results
               </div>
               
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 {showClosed ? 'closed' : 'open'} defects
               </div>
             </div>

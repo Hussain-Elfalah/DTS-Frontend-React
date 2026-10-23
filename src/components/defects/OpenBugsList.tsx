@@ -77,33 +77,33 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
   
   if (!displayData.data.length) {
     return (
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-card shadow rounded-lg p-6">
         {showTitle && (
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Open Bugs</h2>
+          <h2 className="text-lg font-medium text-foreground mb-4">Open Bugs</h2>
         )}
         <div className="text-center py-6">
-          <p className="text-gray-500">No open bugs found</p>
+          <p className="text-muted-foreground">No open bugs found</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="bg-white shadow rounded-lg overflow-hidden">
+    <div className="bg-card shadow rounded-lg overflow-hidden">
       {showTitle && (
-        <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-lg font-medium text-gray-900">Open Bugs</h2>
+        <div className="p-4 border-b border-border flex justify-between items-center">
+          <h2 className="text-lg font-medium text-foreground">Open Bugs</h2>
           <div className="flex space-x-2">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="p-2 text-gray-500 hover:text-gray-700 rounded-md hover:bg-gray-100"
+              className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
               title="Filter"
             >
               <FiFilter className="h-5 w-5" />
             </button>
             <button
               onClick={() => refetch()}
-              className="p-2 text-gray-500 hover:text-gray-700 rounded-md hover:bg-gray-100"
+              className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
               title="Refresh"
             >
               <FiRefreshCw className="h-5 w-5" />
@@ -113,10 +113,10 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
       )}
       
       {showFilters && (
-        <div className="p-4 bg-gray-50 border-b border-gray-200">
+        <div className="p-4 bg-muted border-b border-border">
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
-              <label htmlFor="title-filter" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="title-filter" className="block text-sm font-medium text-foreground mb-1">
                 Issue Title
               </label>
               <input
@@ -129,7 +129,7 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
               />
             </div>
             <div>
-              <label htmlFor="priority-filter" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="priority-filter" className="block text-sm font-medium text-foreground mb-1">
                 Priority
               </label>
               <select
@@ -146,7 +146,7 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
               </select>
             </div>
             <div>
-              <label htmlFor="bug-number-filter" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="bug-number-filter" className="block text-sm font-medium text-foreground mb-1">
                 Bug Number
               </label>
               <input
@@ -159,7 +159,7 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
               />
             </div>
             <div>
-              <label htmlFor="created-by-filter" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="created-by-filter" className="block text-sm font-medium text-foreground mb-1">
                 Created By
               </label>
               <input
@@ -176,56 +176,56 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
       )}
       
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-border">
+          <thead className="bg-muted">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 No.
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Issue Title
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Created By
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Created At
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Assigned To
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Status
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-card divide-y divide-border">
             {displayData.data.map((defect: any) => (
-              <tr key={defect.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <tr key={defect.id} className="hover:bg-muted">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                   {`DFT-${new Date().getFullYear()}-${String(defect.id).padStart(4, '0')}`}
                 </td>
                 <td className="px-6 py-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{defect.title}</p>
-                    <p className="text-sm text-gray-500 line-clamp-2">{defect.description}</p>
+                    <p className="text-sm font-medium text-foreground">{defect.title}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{defect.description}</p>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                   {defect.created_by?.username || 'Unknown'}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                   {defect.created_at ? format(new Date(defect.created_at), 'MMM d, yyyy') : '-'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
-                      <FiUser className="h-4 w-4 text-gray-600" />
+                      <FiUser className="h-4 w-4 text-muted-foreground" />
                     </div>
-                    <span className="ml-2 text-sm text-gray-700">
+                    <span className="ml-2 text-sm text-foreground">
                       {defect.assigned_to?.username || 'Unassigned'}
                     </span>
                   </div>
@@ -235,8 +235,8 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
                     {defect.status === 'open' ? 'open' : 'in progress'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <Link to={`/defects/${defect.id}`} className="text-primary hover:text-blue-700">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <Link to={`/defects/${defect.id}`} className="text-primary hover:text-foreground">
                     View Details
                   </Link>
                 </td>
@@ -246,8 +246,8 @@ const OpenBugsList: React.FC<OpenBugsListProps> = ({
         </table>
       </div>
       
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-        <div className="text-sm text-gray-700">
+      <div className="bg-card px-4 py-3 flex items-center justify-between border-t border-border sm:px-6">
+        <div className="text-sm text-foreground">
           Showing <span className="font-medium">1</span> to <span className="font-medium">{displayData.data.length}</span> of{' '}
           <span className="font-medium">{displayData.data.length}</span> bugs
         </div>

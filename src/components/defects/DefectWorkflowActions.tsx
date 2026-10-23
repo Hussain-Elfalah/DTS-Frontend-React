@@ -171,7 +171,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
     const baseClasses = 'px-4 py-2 rounded-md font-medium text-sm transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed';
     
     if (!action.canPerform) {
-      return `${baseClasses} bg-gray-100 text-gray-400 cursor-not-allowed`;
+      return `${baseClasses} bg-muted text-muted-foreground cursor-not-allowed`;
     }
 
     switch (action.variant) {
@@ -180,19 +180,19 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
       case 'warning':
         return `${baseClasses} bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2`;
       case 'info':
-        return `${baseClasses} bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`;
+        return `${baseClasses} bg-primary text-white hover:bg-primary/90 focus:ring-2 focus:ring-ring focus:ring-offset-2`;
       case 'secondary':
         return `${baseClasses} bg-gray-600 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2`;
       default:
-        return `${baseClasses} bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`;
+        return `${baseClasses} bg-primary text-white hover:bg-primary/90 focus:ring-2 focus:ring-ring focus:ring-offset-2`;
     }
   };
 
   if (loading) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-        <span className="text-sm text-gray-500">Loading actions...</span>
+        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+        <span className="text-sm text-muted-foreground">Loading actions...</span>
       </div>
     );
   }
@@ -204,7 +204,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
   return (
     <>
       <div className={`space-y-2 ${className}`}>
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Available Actions:</h4>
+        <h4 className="text-sm font-medium text-foreground mb-2">Available Actions:</h4>
         <div className="flex flex-wrap gap-2">
           {actions.map((action) => (
             <div key={action.status} className="relative">
@@ -235,7 +235,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
         </div>
         
         {/* Show descriptions for available actions */}
-        <div className="text-xs text-gray-500 space-y-1">
+        <div className="text-xs text-muted-foreground space-y-1">
           {actions.filter(action => action.canPerform).map((action) => (
             <div key={action.status} className="flex items-start space-x-2">
               <span className="font-medium">{action.label}:</span>
@@ -248,24 +248,24 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
       {/* Solution Requirement Modal */}
       {showSolutionModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-sm rounded-md bg-card">
             <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              <h3 className="text-lg font-medium text-foreground mb-4">
                 Solution Required
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 A solution is required when marking a defect as "{pendingStatus}". Please provide details about how this defect was resolved.
               </p>
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="solution" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="solution" className="block text-sm font-medium text-foreground mb-2">
                     Solution Description <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     id="solution"
                     rows={4}
-                    className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="block w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-ring focus:border-ring bg-card text-foreground"
                     placeholder="Describe how this defect was resolved..."
                     value={solutionText}
                     onChange={(e) => setSolutionText(e.target.value)}
@@ -275,14 +275,14 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
 
                 {/* File Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Attachments (Optional)
                   </label>
                   <input
                     type="file"
                     multiple
                     onChange={handleFileChange}
-                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-muted file:text-foreground hover:file:bg-muted"
                     accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg,.gif"
                   />
                   
@@ -290,12 +290,12 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
                   {solutionFiles.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {solutionFiles.map((file, index) => (
-                        <div key={index} className="flex items-center justify-between text-sm bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                          <span className="text-gray-900 dark:text-white">{file.name} ({formatFileSize(file.size)})</span>
+                        <div key={index} className="flex items-center justify-between text-sm bg-muted p-2 rounded">
+                          <span className="text-foreground">{file.name} ({formatFileSize(file.size)})</span>
                           <button
                             type="button"
                             onClick={() => removeFile(index)}
-                            className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                            className="text-red-600 hover:text-red-800"
                           >
                             Remove
                           </button>
@@ -310,7 +310,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
                 <button
                   type="button"
                   onClick={resetSolutionModal}
-                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="px-4 py-2 border border-border rounded-md shadow-sm text-sm font-medium text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
                 >
                   Cancel
                 </button>
@@ -318,7 +318,7 @@ const DefectWorkflowActions: React.FC<DefectWorkflowActionsProps> = ({
                   type="button"
                   onClick={handleSolutionSubmit}
                   disabled={!solutionText.trim() || createSolutionMutation.isPending}
-                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {createSolutionMutation.isPending ? 'Adding Solution...' : 'Add Solution & Continue'}
                 </button>

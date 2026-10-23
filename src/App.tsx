@@ -15,7 +15,6 @@ import DeletedDefectsPage from './pages/admin/DeletedDefectsPage';
 import SettingsPage from './pages/SettingsPage';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider, useToastMessages } from './contexts/ToastContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import { setToastHandler } from './services/api';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
@@ -69,8 +68,8 @@ const AppContent = () => {
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/admin/users" element={<UserManagementPage />} />
           <Route path="/admin/deleted-defects" element={<DeletedDefectsPage />} />
-          <Route path="/admin/settings" element={<div className="p-6">Admin Settings Page</div>} />
-          <Route path="/admin/audit-log" element={<div className="p-6">Audit Logs Page</div>} />
+          <Route path="/admin/settings" element={<div className="space-y-2"><h1 className="text-2xl font-bold tracking-tight">Admin Settings</h1><p className="text-sm text-muted-foreground">Coming soon.</p></div>} />
+          <Route path="/admin/audit-log" element={<div className="space-y-2"><h1 className="text-2xl font-bold tracking-tight">Audit Logs</h1><p className="text-sm text-muted-foreground">Coming soon.</p></div>} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
@@ -82,13 +81,11 @@ function App() {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <AuthProvider>
-            <ToastProvider>
-              <AppContent />
-            </ToastProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
+        </AuthProvider>
       </QueryClientProvider>
     </Router>
   );

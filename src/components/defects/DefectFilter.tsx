@@ -45,7 +45,7 @@ const DefectFilter: React.FC<DefectFilterProps> = ({ onFilterChange, filters }) 
               onChange={(e) => handleFilterChange('search', e.target.value)}
             />
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiSearch className="h-5 w-5 text-gray-400" />
+              <FiSearch className="h-5 w-5 text-muted-foreground" />
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@ const DefectFilter: React.FC<DefectFilterProps> = ({ onFilterChange, filters }) 
             <button
               type="button"
               onClick={clearFilters}
-              className="mr-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+              className="mr-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-foreground bg-muted hover:bg-accent focus:outline-none"
             >
               Clear filters
               <FiX className="ml-1 h-4 w-4" />
@@ -65,9 +65,9 @@ const DefectFilter: React.FC<DefectFilterProps> = ({ onFilterChange, filters }) 
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+            className="inline-flex items-center px-4 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none"
           >
-            <FiFilter className="mr-2 h-5 w-5 text-gray-400" />
+            <FiFilter className="mr-2 h-5 w-5 text-muted-foreground" />
             Filters
             {filtersCount > 0 && (
               <span className="ml-1 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
@@ -80,7 +80,7 @@ const DefectFilter: React.FC<DefectFilterProps> = ({ onFilterChange, filters }) 
 
       {/* Filter panel */}
       {isOpen && (
-        <div className="mt-4 bg-white p-4 shadow rounded-md">
+        <div className="mt-4 bg-card p-4 shadow rounded-md">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Status filter */}
             <div>

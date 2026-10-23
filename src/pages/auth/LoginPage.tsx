@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '../../context/AuthContext';
 import { FiAlertCircle, FiEye, FiEyeOff } from 'react-icons/fi';
 
-// Login form schema
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   password: z.string().min(1, 'Password is required'),
@@ -18,7 +17,7 @@ const LoginPage = () => {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -26,11 +25,11 @@ const LoginPage = () => {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
-  
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setLoginError(null);
-    
+
     try {
       await login(data.username, data.password);
     } catch (error: any) {
@@ -41,118 +40,103 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
-  
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 dark:bg-gray-900">
-      <div className="w-full max-w-md px-8">
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-gray-900 dark:bg-gray-700 text-white w-12 h-12 rounded flex items-center justify-center text-2xl font-bold">
+    <div
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-4"
+      style={{
+        backgroundImage:
+          'radial-gradient(ellipse at top, #f5f5f5 0%, #ffffff 55%)',
+      }}
+    >
+      <div className="pointer-events-none absolute -left-24 top-24 h-64 w-64 rounded-full bg-foreground/[0.03]" />
+      <div className="pointer-events-none absolute -right-16 bottom-20 h-72 w-72 rounded-full bg-foreground/[0.03]" />
+
+      <div className="relative z-10 w-full max-w-sm rounded-lg border border-border bg-card p-6 shadow-sm">
+        <div className="mb-6 flex flex-col items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-primary text-lg font-bold text-primary-foreground">
             DTS
           </div>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">
+            Sign in
+          </h1>
+          <p className="text-center text-sm text-muted-foreground">
+            Defect Tracking System
+          </p>
         </div>
-        
-        {/* Sign in text */}
-        <h1 className="text-center text-2xl font-semibold text-gray-900 dark:text-white mb-8">
-          Login
-        </h1>
-        
-        {/* Login form */}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {loginError && (
-            <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-3 mb-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <FiAlertCircle className="h-5 w-5 text-red-400 dark:text-red-300" />
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-red-800 dark:text-red-200">
-                    {loginError}
-                  </p>
-                </div>
+            <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3">
+              <div className="flex gap-2">
+                <FiAlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+                <p className="text-sm font-medium text-destructive">{loginError}</p>
               </div>
             </div>
           )}
-          
-          {/* Username/Email field */}
+
           <div>
-            <div className="relative">
-              <input
-                id="username"
-                type="text"
-                placeholder="Email address"
-                autoComplete="username"
-                className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border ${
-                  errors.username ? 'border-red-300 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400`}
-                {...register('username')}
-              />
-            </div>
+            <label htmlFor="username" className="form-label">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Email or username"
+              autoComplete="username"
+              className={`form-input ${errors.username ? 'border-destructive focus:ring-destructive' : ''}`}
+              {...register('username')}
+            />
             {errors.username && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+              <p className="mt-1 text-sm text-destructive">
                 {errors.username.message}
               </p>
             )}
           </div>
-          
-          {/* Password field */}
+
           <div>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
             <div className="relative">
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
                 autoComplete="current-password"
-                className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border ${
-                  errors.password ? 'border-red-300 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400`}
+                className={`form-input pr-10 ${errors.password ? 'border-destructive focus:ring-destructive' : ''}`}
                 {...register('password')}
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <FiEyeOff className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <FiEyeOff className="h-4 w-4" />
                 ) : (
-                  <FiEye className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <FiEye className="h-4 w-4" />
                 )}
               </button>
             </div>
             {errors.password && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+              <p className="mt-1 text-sm text-destructive">
                 {errors.password.message}
               </p>
             )}
           </div>
-          
-          {/* Sign in button */}
+
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md font-medium transition-colors duration-200 mt-6"
+            className="btn btn-primary mt-2 w-full"
             disabled={isLoading}
           >
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
-          
-          {/* Forgot password link
-          <div className="text-center mt-4">
-            <button
-              type="button"
-              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
-            >
-              Forgot your password?
-            </button>
-          </div> */}
         </form>
       </div>
     </div>
   );
 };
 
-export default LoginPage; 
+export default LoginPage;

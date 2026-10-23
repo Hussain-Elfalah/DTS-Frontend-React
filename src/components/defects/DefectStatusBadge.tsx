@@ -7,23 +7,21 @@ interface DefectStatusBadgeProps {
 }
 
 const DefectStatusBadge: React.FC<DefectStatusBadgeProps> = ({ status }) => {
-  // Define badge styles based on status
   const getStatusStyles = () => {
     switch (status) {
       case 'open':
-        return 'bg-green-50 text-green-700 border-green-200';
+        return 'bg-emerald-500/15 text-emerald-700 border-emerald-500/20';
       case 'in_progress':
-        return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+        return 'bg-amber-500/15 text-amber-700 border-amber-500/20';
       case 'resolved':
-        return 'bg-blue-50 text-blue-700 border-blue-200';
+        return 'bg-primary/15 text-primary border-primary/20';
       case 'closed':
-        return 'bg-gray-50 text-gray-700 border-gray-200';
+        return 'bg-muted text-muted-foreground border-border';
       default:
-        return 'bg-gray-50 text-gray-700 border-gray-200';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
-  
-  // Get status label for display (capitalized with spaces instead of underscores)
+
   const getStatusLabel = () => {
     switch (status) {
       case 'open':
@@ -35,17 +33,17 @@ const DefectStatusBadge: React.FC<DefectStatusBadgeProps> = ({ status }) => {
       case 'closed':
         return 'Closed';
       default:
-        // Since we've exhausted all possibilities in the StatusType,
-        // this default case shouldn't be reached, but we'll handle it anyway
         return String(status).replace(/_/g, ' ');
     }
   };
-  
+
   return (
-    <span className={`px-3 py-1 inline-flex text-xs font-medium rounded-full border ${getStatusStyles()}`}>
+    <span
+      className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium ${getStatusStyles()}`}
+    >
       {getStatusLabel()}
     </span>
   );
 };
 
-export default DefectStatusBadge; 
+export default DefectStatusBadge;

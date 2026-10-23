@@ -118,14 +118,14 @@ const DeletedDefectsPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="min-h-screen bg-muted py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Error Loading Deleted Defects</h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">Failed to load deleted defects. Please try again.</p>
+            <h1 className="text-2xl font-bold text-foreground mb-4">Error Loading Deleted Defects</h1>
+            <p className="text-muted-foreground mb-4">Failed to load deleted defects. Please try again.</p>
             <button
               onClick={() => refetch()}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
             >
               <FiRefreshCw className="mr-2" />
               Retry
@@ -137,12 +137,12 @@ const DeletedDefectsPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-muted py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Deleted Defects</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <h1 className="text-3xl font-bold text-foreground">Deleted Defects</h1>
+          <p className="mt-2 text-muted-foreground">
             Manage soft-deleted defects. You can restore or permanently delete them.
           </p>
         </div>
@@ -151,19 +151,19 @@ const DeletedDefectsPage: React.FC = () => {
         <div className="mb-6 flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search deleted defects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-border rounded-md shadow-sm bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring"
               />
             </div>
           </div>
           <button
             onClick={() => refetch()}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center px-4 py-2 border border-border shadow-sm text-sm font-medium rounded-md text-foreground bg-card hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
           >
             <FiRefreshCw className="mr-2" />
             Refresh
@@ -173,36 +173,36 @@ const DeletedDefectsPage: React.FC = () => {
         {/* Defects List */}
         {filteredDefects.length === 0 ? (
           <div className="text-center py-12">
-            <FiTrash2 className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No deleted defects</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <FiTrash2 className="mx-auto h-12 w-12 text-muted-foreground" />
+            <h3 className="mt-2 text-sm font-medium text-foreground">No deleted defects</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
               {searchTerm ? 'No deleted defects match your search.' : 'There are no deleted defects to display.'}
             </p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
-            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="bg-card shadow overflow-hidden sm:rounded-md">
+            <ul className="divide-y divide-border">
               {filteredDefects.map((defect: DeletedDefect) => (
                 <li key={defect.id} className="px-6 py-4">
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-3">
                         <div className="flex-shrink-0">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                             Deleted
                           </span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">
+                          <h3 className="text-lg font-medium text-foreground truncate">
                             {defect.title}
                           </h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                          <p className="text-sm text-muted-foreground truncate">
                             {defect.description}
                           </p>
                         </div>
                       </div>
                       
-                      <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="mt-2 flex items-center space-x-4 text-sm text-muted-foreground">
                         <div className="flex items-center space-x-2">
                           <DefectSeverityBadge severity={defect.severity as 'low' | 'medium' | 'high' | 'critical'} />
                           <DefectStatusBadge status={defect.status as 'open' | 'in_progress' | 'resolved' | 'closed'} />
@@ -222,7 +222,7 @@ const DeletedDefectsPage: React.FC = () => {
                       <button
                         onClick={() => handleRestore(defect)}
                         disabled={restoreDefectMutation.isPending}
-                        className="inline-flex items-center px-3 py-1.5 border border-green-300 dark:border-green-600 shadow-sm text-sm font-medium rounded-md text-green-700 dark:text-green-400 bg-white dark:bg-gray-700 hover:bg-green-50 dark:hover:bg-green-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center px-3 py-1.5 border border-green-300 shadow-sm text-sm font-medium rounded-md text-green-700 bg-card hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <FiRefreshCw className="mr-1 h-4 w-4" />
                         Restore
@@ -231,7 +231,7 @@ const DeletedDefectsPage: React.FC = () => {
                       <button
                         onClick={() => handlePermanentDelete(defect)}
                         disabled={permanentDeleteMutation.isPending}
-                        className="inline-flex items-center px-3 py-1.5 border border-red-300 dark:border-red-600 shadow-sm text-sm font-medium rounded-md text-red-700 dark:text-red-400 bg-white dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="inline-flex items-center px-3 py-1.5 border border-red-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-card hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <FiTrash2 className="mr-1 h-4 w-4" />
                         Delete Forever

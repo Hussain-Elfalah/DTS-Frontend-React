@@ -7,27 +7,21 @@ import { useState } from 'react';
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   return (
-    <div className="min-h-screen h-screen flex overflow-hidden bg-gray-100 dark:bg-gray-900">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar isOpen={sidebarOpen} />
-      
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Navbar toggleSidebar={toggleSidebar} />
-        
-        <main className="flex-1 overflow-y-auto bg-gray-100 dark:bg-gray-900">
-          <div className="h-full max-w-full">
-            <Outlet />
-          </div>
+
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+          <Outlet />
         </main>
-        
+
         <Footer />
       </div>
     </div>
   );
 };
 
-export default Layout; 
+export default Layout;

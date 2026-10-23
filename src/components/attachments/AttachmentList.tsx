@@ -92,25 +92,25 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ defectId, attachments }
       {/* Attachments list */}
       {attachments.length === 0 ? (
         <div className="text-center py-6">
-          <div className="mx-auto h-12 w-12 text-gray-400">
+          <div className="mx-auto h-12 w-12 text-muted-foreground">
             <FiPaperclip className="h-full w-full" />
           </div>
-          <p className="mt-2 text-gray-500">No attachments</p>
-          <p className="mt-1 text-sm text-gray-400">Upload an attachment to share it with the team</p>
+          <p className="mt-2 text-muted-foreground">No attachments</p>
+          <p className="mt-1 text-sm text-muted-foreground">Upload an attachment to share it with the team</p>
         </div>
       ) : (
-        <ul className="divide-y divide-gray-200">
+        <ul className="divide-y divide-border">
           {attachments.map((attachment) => (
             <li key={attachment.id} className="py-4 flex items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0 text-gray-500">
+                <div className="flex-shrink-0 text-muted-foreground">
                   {getFileIcon(attachment)}
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-foreground">
                     {attachment.filename}
                   </p>
-                  <div className="flex text-xs text-gray-500 space-x-2">
+                  <div className="flex text-xs text-muted-foreground space-x-2">
                     <span>{formatFileSize(attachment.size)}</span>
                     <span>•</span>
                     <span>
@@ -127,7 +127,7 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ defectId, attachments }
                   href={attachment.url || attachment.path || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-muted-foreground hover:text-muted-foreground"
                   title="Download"
                 >
                   <FiDownload className="h-5 w-5" />
@@ -136,7 +136,7 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ defectId, attachments }
                 {canDeleteAttachment(attachment) && (
                   <button
                     type="button"
-                    className="text-gray-400 hover:text-red-500"
+                    className="text-muted-foreground hover:text-red-500"
                     title="Delete"
                     onClick={() => handleDeleteAttachment(attachment.id)}
                   >
